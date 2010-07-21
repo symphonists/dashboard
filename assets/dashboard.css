@@ -1,0 +1,10 @@
+#dashboard .secondary {
+	padding-top: 0;
+}
+
+#dashboard .panel {
+	border: 1px solid #ddd;
+	background: #f1f1f1;
+	padding: 10px;
+	margin: 10px 0;
+}
