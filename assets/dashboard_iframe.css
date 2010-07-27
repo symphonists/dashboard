@@ -1,0 +1,11 @@
+html, body, form {
+	height: auto;
+}
+
+h1, #usr, #nav {
+	display: none;
+}
+
+form {
+	margin-top: 1.5em;
+}

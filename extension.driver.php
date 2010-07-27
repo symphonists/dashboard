@@ -57,8 +57,18 @@ Class Extension_Dashboard extends Extension{
 			),
 			array(
 				'page'		=> '/backend/',
-				'delegate'	=> 'RenderDashboardPanel',
-				'callback'	=> 'table_data_source'
+				'delegate'	=> 'DashboardPanelRender',
+				'callback'	=> 'render_panel'
+			),
+			array(
+				'page'		=> '/backend/',
+				'delegate'	=> 'DashboardPanelOptions',
+				'callback'	=> 'dashboard_panel_options'
+			),
+			array(
+				'page'		=> '/backend/',
+				'delegate'	=> 'DashboardPanelTypes',
+				'callback'	=> 'dashboard_panel_types'
 			),
 		);
 	}
@@ -81,28 +91,148 @@ Class Extension_Dashboard extends Extension{
 	public function page_pre_generate($context) {
 		// when arriving after logging-in, redirect to Dashboard
 		if (preg_match('/\/symphony\/$/', $_SERVER['HTTP_REFERER'])) redirect($this->root_url);
-		
-		
 	}
 	
 	public static function getPanels() {
-		return Symphony::Database()->fetch('SELECT * FROM sym_dashboard_panels');
+		return Symphony::Database()->fetch('SELECT * FROM sym_dashboard_panels ORDER BY sort_order ASC');
 	}
 	
-	public function table_data_source($context) {
-		if ($context['type'] != 'table_data_source') return;
+	public static function getPanel($panel_id) {
+		return Symphony::Database()->fetchRow(0, "SELECT * FROM sym_dashboard_panels WHERE id='{$panel_id}'");
+	}
+	
+	public static function deletePanel($panel) {
+		return Symphony::Database()->query("DELETE FROM sym_dashboard_panels WHERE id='{$panel['id']}'");
+	}
+	
+	public static function updatePanelOrder($id, $placement, $sort_order) {
+		$sql = sprintf(
+			"UPDATE sym_dashboard_panels SET
+			placement = '%s',
+			sort_order = '%d'
+			WHERE id = '%d'",
+			Symphony::Database()->cleanValue($placement),
+			Symphony::Database()->cleanValue($sort_order),
+			(int)$id
+		);
+		return Symphony::Database()->query($sql);
+	}
+	
+	public static function savePanel($panel=NULL, $config=NULL) {
+		if ($panel['id'] == '') {
+			
+			return Symphony::Database()->query(sprintf(
+				"INSERT INTO sym_dashboard_panels 
+				(label, type, config, placement, sort_order)
+				VALUES('%s','%s','%s','%s','%d')",
+				Symphony::Database()->cleanValue($panel['label']),
+				Symphony::Database()->cleanValue($panel['type']),
+				serialize($config),
+				Symphony::Database()->cleanValue($panel['placement']),
+				0
+			));
+			
+		} else {
+			
+			return Symphony::Database()->query(sprintf(
+				"UPDATE sym_dashboard_panels SET
+				label = '%s',
+				config = '%s',
+				placement = '%s'
+				WHERE id = '%d'",
+				Symphony::Database()->cleanValue($panel['label']),
+				serialize($config),
+				Symphony::Database()->cleanValue($panel['placement']),
+				(int)$panel['id']
+			));
+			
+		}
+
+	}
+	
+	public static function buildPanelOptions($type, $panel_id) {
 		
-		require_once(TOOLKIT . '/class.datasourcemanager.php');
-		$dsm = new DatasourceManager(Administration::instance());
+		$panel_config = self::getPanel($panel_id);
 		
-		$ds = $dsm->create($context['config']['data-source'], NULL, false);
-		$xml = $ds->grab()->generate();
+		$form = null;
+		Administration::instance()->ExtensionManager->notifyMembers('DashboardPanelOptions', '/backend/', array(
+			'type'				=> $type,
+			'form'				=> &$form,
+			'existing_config'	=> unserialize($panel_config['config'])
+		));
+
+		return $form;
 		
-		require_once(TOOLKIT . '/class.xsltprocess.php');
-		$proc = new XsltProcess();
-		$data = $proc->process($xml, file_get_contents(EXTENSIONS . '/dashboard/lib/table.xsl'));
+	}
+	
+	public function dashboard_panel_types($context) {
+		$context['types']['datasource_to_table'] = 'Datasource to Table';
+		$context['types']['rss_reader'] = 'RSS Feed Reader';
+	}
+
+	public function dashboard_panel_options($context) {
 		
-		$context['panel']->appendChild(new XMLElement('div', $data));
+		$config = $context['existing_config'];
+		
+		switch($context['type']) {
+			
+			case 'datasource_to_table':
+				
+				require_once(TOOLKIT . '/class.datasourcemanager.php');
+				$dsm = new DatasourceManager(Administration::instance());
+				$datasources = array();
+				foreach($dsm->listAll() as $ds) $datasources[] = array($ds['handle'], ($config['datasource'] == $ds['handle']), $ds['name']);
+
+				$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
+				$fieldset->appendChild(new XMLElement('legend', 'Data Source to Table'));
+				$label = Widget::Label('Data Source', Widget::Select('config[datasource]', $datasources));
+				$fieldset->appendChild($label);
+
+				$context['form'] = $fieldset;
+				
+			break;
+			
+			case 'rss_reader':
+			
+				$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
+				$fieldset->appendChild(new XMLElement('legend', 'RSS Reader'));
+				$label = Widget::Label('Feed URL', Widget::Input('config[url]', $config['url']));
+				$fieldset->appendChild($label);
+
+				$context['form'] = $fieldset;
+
+			break;
+		}
+
+	}
+		
+	public function render_panel($context) {
+		
+		switch($context['type']) {
+			
+			case 'datasource_to_table':
+
+				require_once(TOOLKIT . '/class.datasourcemanager.php');
+				$dsm = new DatasourceManager(Administration::instance());
+
+				$ds = $dsm->create($context['config']['datasource'], NULL, false);
+				$xml = $ds->grab()->generate();
+
+				require_once(TOOLKIT . '/class.xsltprocess.php');
+				$proc = new XsltProcess();
+				$data = $proc->process($xml, file_get_contents(EXTENSIONS . '/dashboard/lib/table.xsl'));
+
+				$context['panel']->appendChild(new XMLElement('div', $data));
+			
+			break;
+			
+			case 'rss_reader':
+			
+				$context['panel']->appendChild(new XMLElement('div', 'Nothing to see yet, but this will parse an RSS feed.'));
+			
+			break;
+			
+		}
 		
 	}
 		

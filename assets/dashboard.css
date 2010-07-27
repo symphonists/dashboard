@@ -1,10 +1,87 @@
-#dashboard .secondary {
-	padding-top: 0;
+html {
+	overflow-y: scroll;
 }
 
-#dashboard .panel {
-	border: 1px solid #ddd;
-	background: #f1f1f1;
-	padding: 10px;
+h2 select {
+	font-size: 85%;
+	width: auto;
+	float: right;
+	margin-right: 10px;
+}
+
+#dashboard .sortable-container {
+	padding-top: 0;
 	margin: 10px 0;
+}
+
+.sortable-container {
+	padding: 10px;
+	border: 2px dashed #fff;
+	min-height: 100px;
+}
+
+.sortable-container.hover {
+	border: 2px dashed #eee;
+}
+
+.sortable-container.active {
+	border: 2px dashed #aaa !important;
+}
+
+.panel {
+	background: #ddd;
+	-moz-border-radius: 7px;
+	padding: 5px;
+	margin: 10px 0;
+	position: relative;
+}
+
+.panel-placeholder {
+	background: #f1f1f1;
+	-moz-border-radius: 7px;
+	min-height: 60px;
+	margin: 10px 0;
+}
+
+.panel h3 {
+	font-size: 130%;
+	font-weight: normal;
+	margin: 0 0 5px 5px;
+	cursor: move;
+}
+
+.panel a.panel-edit {
+	position: absolute;
+	top: 7px;
+	right: 12px;
+	color: #aaa;
+	z-index: 1;
+	text-decoration: none;
+}
+
+.panel a.panel-edit:hover {
+	color: #666;
+}
+
+.panel-inner {
+	background: #f9f9f9;
+	-moz-border-radius: 5px;
+	position: relative;
+	padding: 5px 8px;
+}
+
+.datasource_to_table table caption {
+	color: #aaa;
+	text-align: left;
+	display: none;
+}
+
+.datasource_to_table table td {
+	vertical-align: top;
+	padding: 2px;
+}
+
+.datasource_to_table table th {
+	text-align: left;
+	text-transform: capitalize;
 }
