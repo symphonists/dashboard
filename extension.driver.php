@@ -16,30 +16,18 @@ Class Extension_Dashboard extends Extension{
 	}
 
 	public function install() {
-		// create table
-		
-		/*
-		CREATE TABLE `sym_dashboard_panels` (
+		return Symphony::Database()->query("CREATE TABLE `tbl_dashboard_panels` (
 		  `id` int(11) NOT NULL auto_increment,
 		  `type` varchar(255) default NULL,
 		  `config` text,
 		  `order` int(11) default NULL,
 		  `placement` varchar(255) default NULL,
 		  PRIMARY KEY  (`id`)
-		) ENGINE=MyISAM;
-		*/
-		
-		/*
-		INSERT INTO `sym_dashboard_panels` (`id`,`type`,`config`,`order`,`placement`)
-		VALUES
-			(1,'html_panel',NULL,1,'primary'),
-			(2,'html_panel',NULL,4,'secondary'),
-			(3,'table_data_source','a:1:{s:11:\"data-source\";s:7:\"articles\";}',5,'primary');
-		*/
+		) ENGINE=MyISAM;");
 	}
 
-       public function uninstall() {
-		// drop table
+	public function uninstall() {
+		return Symphony::Database()->query("DROP TABLE `tbl_dashboard_panels`");
 	}
 
 	
@@ -94,20 +82,20 @@ Class Extension_Dashboard extends Extension{
 	}
 	
 	public static function getPanels() {
-		return Symphony::Database()->fetch('SELECT * FROM sym_dashboard_panels ORDER BY sort_order ASC');
+		return Symphony::Database()->fetch('SELECT * FROM tbl_dashboard_panels ORDER BY sort_order ASC');
 	}
 	
 	public static function getPanel($panel_id) {
-		return Symphony::Database()->fetchRow(0, "SELECT * FROM sym_dashboard_panels WHERE id='{$panel_id}'");
+		return Symphony::Database()->fetchRow(0, "SELECT * FROM tbl_dashboard_panels WHERE id='{$panel_id}'");
 	}
 	
 	public static function deletePanel($panel) {
-		return Symphony::Database()->query("DELETE FROM sym_dashboard_panels WHERE id='{$panel['id']}'");
+		return Symphony::Database()->query("DELETE FROM tbl_dashboard_panels WHERE id='{$panel['id']}'");
 	}
 	
 	public static function updatePanelOrder($id, $placement, $sort_order) {
 		$sql = sprintf(
-			"UPDATE sym_dashboard_panels SET
+			"UPDATE tbl_dashboard_panels SET
 			placement = '%s',
 			sort_order = '%d'
 			WHERE id = '%d'",
@@ -122,7 +110,7 @@ Class Extension_Dashboard extends Extension{
 		if ($panel['id'] == '') {
 			
 			return Symphony::Database()->query(sprintf(
-				"INSERT INTO sym_dashboard_panels 
+				"INSERT INTO tbl_dashboard_panels 
 				(label, type, config, placement, sort_order)
 				VALUES('%s','%s','%s','%s','%d')",
 				Symphony::Database()->cleanValue($panel['label']),
@@ -135,7 +123,7 @@ Class Extension_Dashboard extends Extension{
 		} else {
 			
 			return Symphony::Database()->query(sprintf(
-				"UPDATE sym_dashboard_panels SET
+				"UPDATE tbl_dashboard_panels SET
 				label = '%s',
 				config = '%s',
 				placement = '%s'
