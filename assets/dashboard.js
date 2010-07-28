@@ -10,7 +10,7 @@ jQuery(document).ready(function() {
 	}
 	
 	jQuery('a.create').bind('click', function() {
-		jQuery(this).attr('href', '/symphony/extension/dashboard/panel_config/?type=' + jQuery('h2 select').val());
+		jQuery(this).attr('href', Symphony.WEBSITE + '/symphony/extension/dashboard/panel_config/?type=' + jQuery('h2 select').val());
 	})
 	
 	jQuery("a.panel-edit, a.create").fancybox({
@@ -42,7 +42,7 @@ jQuery(document).ready(function() {
 			});
 			jQuery.ajax({
 				type: 'POST',
-				url: '/symphony/extension/dashboard/save_order/',
+				url: Symphony.WEBSITE + '/symphony/extension/dashboard/save_order/',
 				data: post,
 			});
 		}
