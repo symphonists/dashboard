@@ -157,6 +157,7 @@ Class Extension_Dashboard extends Extension{
 	public function dashboard_panel_types($context) {
 		$context['types']['datasource_to_table'] = 'Datasource to Table';
 		$context['types']['rss_reader'] = 'RSS Feed Reader';
+		$context['types']['html_block'] = 'HTML Block';
 		$context['types']['symphony_overview'] = 'Symphony Overview';
 	}
 
@@ -200,6 +201,21 @@ Class Extension_Dashboard extends Extension{
 				$fieldset->appendChild($label);
 				
 				$label = Widget::Label('Cache feed XML (minutes)', Widget::Input('config[cache]', (int)$config['cache']));
+				$fieldset->appendChild($label);
+
+				$context['form'] = $fieldset;
+
+			break;
+			
+			case 'html_block':
+			
+				$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
+				$fieldset->appendChild(new XMLElement('legend', 'RSS Reader'));
+				
+				$label = Widget::Label('Page URL', Widget::Input('config[url]', $config['url']));
+				$fieldset->appendChild($label);
+								
+				$label = Widget::Label('Cache (minutes)', Widget::Input('config[cache]', (int)$config['cache']));
 				$fieldset->appendChild($label);
 
 				$context['form'] = $fieldset;
@@ -272,6 +288,39 @@ Class Extension_Dashboard extends Extension{
 				);
 				
 				$context['panel']->appendChild(new XMLElement('div', $data));
+			
+			break;
+			
+			case 'html_block':
+				
+				require_once(TOOLKIT . '/class.gateway.php');
+				require_once(CORE . '/class.cacheable.php');
+				
+				$cache_id = md5('html_block_' . $config['url']);
+				$cache = new Cacheable(Administration::instance()->Database());
+				$data = $cache->check($cache_id);
+
+				if(!$data) {
+					
+						$ch = new Gateway;
+						$ch->init();
+						$ch->setopt('URL', $config['url']);
+						$ch->setopt('TIMEOUT', 6);
+						$new_data = $ch->exec();
+						$writeToCache = true;
+						
+						if ((int)$config['cache'] > 0) {
+							$cache->write($cache_id, $new_data, $config['cache']);
+						}
+						
+						$html = $new_data;
+						if (empty($html) && $data) $html = $data['data'];
+					
+				} else {
+					$html = $data['data'];
+				}
+				
+				$context['panel']->appendChild(new XMLElement('div', $html));
 			
 			break;
 			
