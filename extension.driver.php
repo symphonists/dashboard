@@ -4,12 +4,12 @@ Class Extension_Dashboard extends Extension{
 	
 	public function about() {
 		return array('name' => 'Dashboard',
-					 'version' => '0.1',
-					 'release-date' => '2010-07-16',
+					 'version' => '1.0',
+					 'release-date' => '2010-07-28',
 					 'author' => array('name' => 'Nick Dunn',
 									   'website' => 'http://nick-dunn.co.uk',
 									   'email' => ''),
-						'description'   => 'Provide a dashboard for your users'
+						'description'   => 'Provide a Dashboard summary screen with configurable panels.'
 			 		);
 	}
 
