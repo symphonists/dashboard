@@ -2,8 +2,6 @@
 
 Class Extension_Dashboard extends Extension{
 	
-	private $root_url = '/symphony/extension/dashboard/index/';
-	
 	public function about() {
 		return array('name' => 'Dashboard',
 					 'version' => '0.1',
@@ -69,7 +67,7 @@ Class Extension_Dashboard extends Extension{
 			'index'		=> '1',
 			'children'	=> array(
 				array(
-					'link'		=> '/' . preg_replace('/\/symphony\//', '', $this->root_url),
+					'link'		=> '/extension/dashboard/',
 					'name'		=> __('Dashboard'),
 					'visible'	=> 'yes'
 				),
@@ -79,7 +77,7 @@ Class Extension_Dashboard extends Extension{
 	
 	public function page_pre_generate($context) {
 		// when arriving after logging-in, redirect to Dashboard
-		if (preg_match('/\/symphony\/$/', $_SERVER['HTTP_REFERER'])) redirect($this->root_url);
+		//if (preg_match('/\/symphony\/$/', $_SERVER['HTTP_REFERER'])) redirect('http://' . DOMAIN . '/symphony/extension/dashboard/index/');
 	}
 	
 	public static function getPanels() {
