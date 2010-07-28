@@ -235,7 +235,8 @@ Class Extension_Dashboard extends Extension{
 				$dsm = new DatasourceManager(Administration::instance());
 
 				$ds = $dsm->create($config['datasource'], NULL, false);
-				$xml = $ds->grab()->generate();
+				$param_pool = array();
+				$xml = $ds->grab($param_pool)->generate();
 
 				require_once(TOOLKIT . '/class.xsltprocess.php');
 				$proc = new XsltProcess();
