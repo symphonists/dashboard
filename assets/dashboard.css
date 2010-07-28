@@ -1,3 +1,6 @@
+
+/* DASHBOARD */
+
 html {
 	overflow-y: scroll;
 }
@@ -70,6 +73,8 @@ h2 select {
 	padding: 10px;
 }
 
+/* PANEL: Datasource to Table */
+
 .datasource_to_table table {
 	border-collapse: collapse;
 	width: 100%;
@@ -96,6 +101,8 @@ h2 select {
 	background: transparent;
 }
 
+/* PANEL: RSS Feed Reader */
+
 .rss_reader h5 {
 	margin: 10px 0 0 0;
 }
@@ -113,6 +120,8 @@ h2 select {
 	margin: -1px 0 0 0;
 }
 
+/* PANEL: Symphony Overview */
+
 .symphony_overview h4 {
 	margin: 0 0 5px 0;
 }
@@ -124,6 +133,7 @@ h2 select {
 
 .symphony_overview dt {
 	float: left;
+	clear: left;
 	width: 25%;
 }
 

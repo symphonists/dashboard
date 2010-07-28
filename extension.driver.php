@@ -350,15 +350,15 @@ Class Extension_Dashboard extends Extension{
 				
 				$dl = new XMLElement('dl');
 				$dl->appendChild(new XMLElement('dt', 'Sections'));
-				$dl->appendChild(new XMLElement('dd', count($sections)));
+				$dl->appendChild(new XMLElement('dd', (string)count($sections)));
 				$dl->appendChild(new XMLElement('dt', 'Entries'));
-				$dl->appendChild(new XMLElement('dd', $entries['count']));
+				$dl->appendChild(new XMLElement('dd', (string)$entries['count']));
 				$dl->appendChild(new XMLElement('dt', 'Data Sources'));
-				$dl->appendChild(new XMLElement('dd', count($dsm->listAll())));
+				$dl->appendChild(new XMLElement('dd', (string)count($dsm->listAll())));
 				$dl->appendChild(new XMLElement('dt', 'Events'));
-				$dl->appendChild(new XMLElement('dd', count($em->listAll())));
+				$dl->appendChild(new XMLElement('dd', (string)count($em->listAll())));
 				$dl->appendChild(new XMLElement('dt', 'Pages'));
-				$dl->appendChild(new XMLElement('dd', $pages['count']));
+				$dl->appendChild(new XMLElement('dd', (string)$pages['count']));
 				
 				$container->appendChild(new XMLElement('h4', 'Statistics'));
 				$container->appendChild($dl);
