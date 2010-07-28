@@ -16,6 +16,7 @@ Class contentExtensionDashboardSave_Order extends AdministrationPage {
 			//var_dump($panel);die;
 			Extension_Dashboard::updatePanelOrder($panel['id'], $panel['placement'], $panel['sort_order']);
 		}
+		die;
 		
 	}
 	

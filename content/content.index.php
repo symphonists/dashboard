@@ -29,7 +29,7 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 	
 		$panel_types = array();
 		Administration::instance()->ExtensionManager->notifyMembers('DashboardPanelTypes', '/backend/', array(
-			'types'				=> &$panel_types
+			'types' => &$panel_types
 		));
 		
 		$panel_types_options = array();

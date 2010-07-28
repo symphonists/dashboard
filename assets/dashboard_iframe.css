@@ -2,7 +2,7 @@ html, body, form {
 	height: auto;
 }
 
-h1, #usr, #nav {
+h1, #usr, #nav, #version {
 	display: none;
 }
 

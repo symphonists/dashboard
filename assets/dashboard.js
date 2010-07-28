@@ -30,13 +30,15 @@ jQuery(document).ready(function() {
 		revert: 200,
 		stop: function(event, ui) {
 			var post = '';
-			jQuery('.primary, .secondary').each(function(i) {
-				var sort = 1;
+			var i = 0;
+			jQuery('.primary, .secondary').each(function(j) {
+				var sort_order = 1;
 				jQuery('.panel', this).each(function() {
-					post += 'panel[' + sort + '][id]=' + jQuery(this).attr('id').replace(/^id-/,'') + '&';
-					post += 'panel[' + sort + '][placement]=' + ((i == 0) ? 'primary' : 'secondary') + '&';
-					post += 'panel[' + sort + '][sort_order]=' + sort++ + '&';
-				})
+					post += 'panel[' + i + '][id]=' + jQuery(this).attr('id').replace(/^id-/,'') + '&';
+					post += 'panel[' + i + '][placement]=' + ((j == 0) ? 'primary' : 'secondary') + '&';
+					post += 'panel[' + i + '][sort_order]=' + sort_order++ + '&';
+					i++;
+				});
 			});
 			jQuery.ajax({
 				type: 'POST',

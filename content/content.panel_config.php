@@ -47,8 +47,6 @@ Class contentExtensionDashboardPanel_Config extends AdministrationPage {
 		$panel_config = Extension_Dashboard::getPanel($id);
 		$config_options = Extension_Dashboard::buildPanelOptions($type, $id);
 		
-		if (!$config_options) die('No config found.');
-		
 		$primary = new XMLElement('div', NULL, array('class' => 'panel-config'));
 		
 		$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
@@ -65,7 +63,7 @@ Class contentExtensionDashboardPanel_Config extends AdministrationPage {
 		));
 		$primary->appendChild($fieldset);
 		
-		$primary->appendChild($config_options);
+		if ($config_options) $primary->appendChild($config_options);
 		
 		$actions = new XMLElement('div', NULL, array('class' => 'actions'));
 		$actions->appendChild(Widget::Input('action[submit]', 'Save Panel', 'submit'));

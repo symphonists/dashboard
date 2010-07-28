@@ -14,17 +14,17 @@ h2 select {
 	margin: 10px 0;
 }
 
-.sortable-container {
-	padding: 10px;
+#dashboard .sortable-container {
+	padding: 5px 10px;
 	border: 2px dashed #fff;
-	min-height: 100px;
+	min-height: 85px;
 }
 
-.sortable-container.hover {
+#dashboard .sortable-container.hover {
 	border: 2px dashed #eee;
 }
 
-.sortable-container.active {
+#dashboard .sortable-container.active {
 	border: 2px dashed #aaa !important;
 }
 
@@ -44,7 +44,7 @@ h2 select {
 }
 
 .panel h3 {
-	font-size: 130%;
+	font-size: 110%;
 	font-weight: normal;
 	margin: 0 0 5px 5px;
 	cursor: move;
@@ -67,21 +67,67 @@ h2 select {
 	background: #f9f9f9;
 	-moz-border-radius: 5px;
 	position: relative;
-	padding: 5px 8px;
+	padding: 10px;
 }
 
-.datasource_to_table table caption {
-	color: #aaa;
-	text-align: left;
-	display: none;
+.datasource_to_table table {
+	border-collapse: collapse;
+	width: 100%;
 }
 
 .datasource_to_table table td {
 	vertical-align: top;
-	padding: 2px;
+	padding: 5px;
+	background: #f1f1f1;
+}
+
+.datasource_to_table table td.text {
+	white-space: nowrap;
 }
 
 .datasource_to_table table th {
 	text-align: left;
 	text-transform: capitalize;
+	border-bottom: 1px solid #ccc;
+	padding: 5px;
+}
+
+.datasource_to_table table .alt td {
+	background: transparent;
+}
+
+.rss_reader h5 {
+	margin: 10px 0 0 0;
+}
+
+.rss_reader h5:first-child {
+	margin-top: 0;
+}
+
+.rss_reader p {
+	margin: 0;
+}
+
+.rss_reader p.date {
+	color: #aaa;
+	margin: -1px 0 0 0;
+}
+
+.symphony_overview h4 {
+	margin: 0 0 5px 0;
+}
+
+.symphony_overview dl {
+	margin: 0 0 10px 0;
+	overflow: hidden;
+}
+
+.symphony_overview dt {
+	float: left;
+	width: 25%;
+}
+
+.symphony_overview dd {
+	float: left;
+	width: 70%;
 }

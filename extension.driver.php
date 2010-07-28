@@ -18,12 +18,13 @@ Class Extension_Dashboard extends Extension{
 	public function install() {
 		return Symphony::Database()->query("CREATE TABLE `tbl_dashboard_panels` (
 		  `id` int(11) NOT NULL auto_increment,
+		  `label` varchar(255) default NULL,
 		  `type` varchar(255) default NULL,
 		  `config` text,
-		  `order` int(11) default NULL,
 		  `placement` varchar(255) default NULL,
+		  `sort_order` int(11) default '0',
 		  PRIMARY KEY  (`id`)
-		) ENGINE=MyISAM;");
+		) ENGINE=MyISAM");
 	}
 
 	public function uninstall() {
@@ -156,6 +157,7 @@ Class Extension_Dashboard extends Extension{
 	public function dashboard_panel_types($context) {
 		$context['types']['datasource_to_table'] = 'Datasource to Table';
 		$context['types']['rss_reader'] = 'RSS Feed Reader';
+		$context['types']['symphony_overview'] = 'Symphony Overview';
 	}
 
 	public function dashboard_panel_options($context) {
@@ -173,6 +175,7 @@ Class Extension_Dashboard extends Extension{
 
 				$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
 				$fieldset->appendChild(new XMLElement('legend', 'Data Source to Table'));
+				
 				$label = Widget::Label('Data Source', Widget::Select('config[datasource]', $datasources));
 				$fieldset->appendChild($label);
 
@@ -184,7 +187,19 @@ Class Extension_Dashboard extends Extension{
 			
 				$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
 				$fieldset->appendChild(new XMLElement('legend', 'RSS Reader'));
+				
 				$label = Widget::Label('Feed URL', Widget::Input('config[url]', $config['url']));
+				$fieldset->appendChild($label);
+				
+				$label = Widget::Label('Items to display', Widget::Select('config[show]', array(
+					array('all', ($config['show'] == 'all'), 'All items'),
+					array('3', ($config['show'] == '3'), '3 items'),
+					array('5', ($config['show'] == '5'), '5 items'),
+					array('10', ($config['show'] == '10'), '10 items')
+				)));
+				$fieldset->appendChild($label);
+				
+				$label = Widget::Label('Cache feed XML (minutes)', Widget::Input('config[cache]', (int)$config['cache']));
 				$fieldset->appendChild($label);
 
 				$context['form'] = $fieldset;
@@ -196,6 +211,8 @@ Class Extension_Dashboard extends Extension{
 		
 	public function render_panel($context) {
 		
+		$config = $context['config'];
+		
 		switch($context['type']) {
 			
 			case 'datasource_to_table':
@@ -203,21 +220,104 @@ Class Extension_Dashboard extends Extension{
 				require_once(TOOLKIT . '/class.datasourcemanager.php');
 				$dsm = new DatasourceManager(Administration::instance());
 
-				$ds = $dsm->create($context['config']['datasource'], NULL, false);
+				$ds = $dsm->create($config['datasource'], NULL, false);
 				$xml = $ds->grab()->generate();
 
 				require_once(TOOLKIT . '/class.xsltprocess.php');
 				$proc = new XsltProcess();
-				$data = $proc->process($xml, file_get_contents(EXTENSIONS . '/dashboard/lib/table.xsl'));
+				$data = $proc->process(
+					$xml,
+					file_get_contents(EXTENSIONS . '/dashboard/lib/datasource-to-table.xsl')
+				);
 
 				$context['panel']->appendChild(new XMLElement('div', $data));
 			
 			break;
 			
 			case 'rss_reader':
+				
+				require_once(TOOLKIT . '/class.gateway.php');
+				require_once(CORE . '/class.cacheable.php');
+				
+				$cache_id = md5('rss_reader_cache' . $config['url']);
+				$cache = new Cacheable(Administration::instance()->Database());
+				$data = $cache->check($cache_id);
+
+				if(!$data) {
+					
+						$ch = new Gateway;
+						$ch->init();
+						$ch->setopt('URL', $config['url']);
+						$ch->setopt('TIMEOUT', 6);
+						$new_data = $ch->exec();
+						$writeToCache = true;
+						
+						if ((int)$config['cache'] > 0) {
+							$cache->write($cache_id, $new_data, $config['cache']);
+						}
+						
+						$xml = $new_data;
+						if (empty($xml) && $data) $xml = $data['data'];
+					
+				} else {
+					$xml = $data['data'];
+				}
+				
+				require_once(TOOLKIT . '/class.xsltprocess.php');
+				$proc = new XsltProcess();
+				$data = $proc->process(
+					$xml,
+					file_get_contents(EXTENSIONS . '/dashboard/lib/rss-reader.xsl'),
+					array('show' => $config['show'])
+				);
+				
+				$context['panel']->appendChild(new XMLElement('div', $data));
 			
-				$context['panel']->appendChild(new XMLElement('div', 'Nothing to see yet, but this will parse an RSS feed.'));
+			break;
 			
+			case 'symphony_overview':
+				
+				$container = new XMLElement('div');
+				
+				$dl = new XMLElement('dl');
+				$dl->appendChild(new XMLElement('dt', 'Site name'));
+				$dl->appendChild(new XMLElement('dd', Symphony::Configuration()->get('sitename', 'general')));
+				$dl->appendChild(new XMLElement('dt', 'Version'));
+				$dl->appendChild(new XMLElement('dd', Symphony::Configuration()->get('version', 'symphony')));
+				$container->appendChild(new XMLElement('h4', 'Configuration'));
+				$container->appendChild($dl);
+				
+				require_once(TOOLKIT . '/class.datasourcemanager.php');
+				$dsm = new DatasourceManager(Administration::instance());
+				
+				require_once(TOOLKIT . '/class.eventmanager.php');
+				$em = new EventManager(Administration::instance());
+				
+				require_once(TOOLKIT . '/class.sectionmanager.php');
+				$sm = new SectionManager(Administration::instance());
+				$sections = $sm->fetch();
+				
+				$entries = Administration::instance()->Database()->fetchRow(0, "SELECT count(id) AS `count` FROM tbl_entries");
+				
+				$pages = Administration::instance()->Database()->fetchRow(0, "SELECT count(id) AS `count` FROM tbl_pages");
+				
+				$dl = new XMLElement('dl');
+				$dl->appendChild(new XMLElement('dt', 'Sections'));
+				$dl->appendChild(new XMLElement('dd', count($sections)));
+				$dl->appendChild(new XMLElement('dt', 'Entries'));
+				$dl->appendChild(new XMLElement('dd', $entries['count']));
+				$dl->appendChild(new XMLElement('dt', 'Data Sources'));
+				$dl->appendChild(new XMLElement('dd', count($dsm->listAll())));
+				$dl->appendChild(new XMLElement('dt', 'Events'));
+				$dl->appendChild(new XMLElement('dd', count($em->listAll())));
+				$dl->appendChild(new XMLElement('dt', 'Pages'));
+				$dl->appendChild(new XMLElement('dd', $pages['count']));
+				
+				$container->appendChild(new XMLElement('h4', 'Statistics'));
+				$container->appendChild($dl);
+				
+				$context['panel']->appendChild($container);
+				
 			break;
 			
 		}
