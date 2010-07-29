@@ -234,7 +234,15 @@ Class Extension_Dashboard extends Extension{
 				require_once(TOOLKIT . '/class.datasourcemanager.php');
 				$dsm = new DatasourceManager(Administration::instance());
 
-				$ds = $dsm->create($config['datasource'], NULL, false);
+				$ds = @$dsm->create($config['datasource'], NULL, false);
+				if (!$ds) {
+					$context['panel']->appendChild(new XMLElement('div', sprintf(
+						"The Data Source with the name <code>%s</code> could not be found.",
+						$config['datasource']
+					)));
+					return;
+				}
+				
 				$param_pool = array();
 				$xml = $ds->grab($param_pool)->generate();
 
