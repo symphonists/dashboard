@@ -1,5 +1,11 @@
 jQuery(document).ready(function() {
 	
+	/* 
+		* rewrite as a clean object rather than standalone functions
+		* refine selectors to prevent re-selection
+		* allow toggling of Edit controls
+	*/
+	
 	jQuery('a.create').bind('click', function(e) {
 		e.preventDefault();		
 		var type = jQuery('h2 select').val();
@@ -42,9 +48,7 @@ jQuery(document).ready(function() {
 		}
 		jQuery('#save-panel').slideUp(function() {
 			jQuery(this).remove();
-			if (typeof callback == 'function') {
-				callback();
-			}
+			if (typeof callback == 'function') callback();
 		});
 	}
 	
@@ -54,6 +58,7 @@ jQuery(document).ready(function() {
 			url: Symphony.WEBSITE + '/symphony/extension/dashboard/panel_config/?type=' + type + ((id != null) ? ('&id=' + id) : ''),
 			success: function(data) {
 				var form = jQuery('#save-panel');
+				// if form exists in the DOM it needs to be removed first before the new form is revealed
 				if (form.length) {
 					hideEditForm(function() { revealEditForm(data); }, false);
 				} else {
@@ -61,6 +66,14 @@ jQuery(document).ready(function() {
 				}
 			}
 		});
+	}
+	
+	function revealEditForm(html) {
+		// fade down dashboard panels to give edit form more priority
+		jQuery('#dashboard').fadeTo('fast', 0.5);
+		// append form to page (hidden with CSS)
+		jQuery('h2').after(html);
+		jQuery('#save-panel').slideDown();
 	}
 	
 	function savePanel(post_data, action) {
@@ -111,13 +124,7 @@ jQuery(document).ready(function() {
 			}
 		});
 	}
-	
-	function revealEditForm(html) {
-		jQuery('#dashboard').fadeTo('fast', 0.5);
-		jQuery('h2').after(html);
-		jQuery('#save-panel').slideDown();
-	}
-	
+		
 	jQuery('.primary, .secondary').sortable({
 		items: '.panel',
 		connectWith: '.sortable-container',
