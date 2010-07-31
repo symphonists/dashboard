@@ -5,11 +5,51 @@ html {
 	overflow-y: scroll;
 }
 
+h2 {
+	margin-left: -19px;
+	margin-right: -19px;
+	padding-left: 19px;
+	padding-right: 19px;
+	-moz-box-shadow: 0 5px 8px #f5f5f4;
+}
+
 h2 select {
-	font-size: 85%;
+	font-size: 80%;
 	width: auto;
 	float: right;
 	margin-right: 10px;
+}
+
+#save-panel {
+	margin-left: -19px;
+	margin-right: -19px;
+	padding-left: 19px;
+	padding-right: 19px;
+	
+	display: none;
+	overflow: hidden;
+	border-bottom: 1px solid #ddddcc;
+	-moz-box-shadow: 0 5px 8px #f5f5f4;
+}
+
+#save-panel h3 {
+	font-size: 120%;
+	color: #aaa;
+	text-shadow: none;
+	font-weight: normal;
+	margin: 10px 0 0 0;
+}
+
+#save-panel fieldset {
+	border-color: #eee;
+}
+
+#save-panel .actions {
+	border: none;
+}
+
+#dashboard {
+	overflow: hidden;
 }
 
 #dashboard .sortable-container {

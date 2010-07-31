@@ -108,7 +108,7 @@ Class Extension_Dashboard extends Extension{
 	public static function savePanel($panel=NULL, $config=NULL) {
 		if ($panel['id'] == '') {
 			
-			return Symphony::Database()->query(sprintf(
+			Symphony::Database()->query(sprintf(
 				"INSERT INTO tbl_dashboard_panels 
 				(label, type, config, placement, sort_order)
 				VALUES('%s','%s','%s','%s','%d')",
@@ -119,9 +119,11 @@ Class Extension_Dashboard extends Extension{
 				0
 			));
 			
+			return Symphony::Database()->getInsertID();
+			
 		} else {
 			
-			return Symphony::Database()->query(sprintf(
+			Symphony::Database()->query(sprintf(
 				"UPDATE tbl_dashboard_panels SET
 				label = '%s',
 				config = '%s',
@@ -133,8 +135,30 @@ Class Extension_Dashboard extends Extension{
 				(int)$panel['id']
 			));
 			
+			return (int)$panel['id'];
+			
 		}
 
+	}
+	
+	public static function buildPanelHTML($p) {
+		
+		$panel = new XMLElement('div', NULL, array('class' => 'panel', 'id' => 'id-' . $p['id']));
+		$panel->appendChild(new XMLElement('a', 'Edit', array('class' => 'panel-edit', 'href' => URL . '/symphony/extension/dashboard/panel_config/?id=' . $p['id'] . '&type=' . $p['type'])));
+		$panel->appendChild(new XMLElement('h3', ($p['label'] == '') ? __('Untitled Panel') : $p['label']));
+		
+		$panel_inner = new XMLElement('div', NULL, array('class' => 'panel-inner'));
+		
+		Administration::instance()->ExtensionManager->notifyMembers('DashboardPanelRender', '/backend/', array(
+			'type'		=> $p['type'],
+			'config'	=> unserialize($p['config']),
+			'panel'		=> &$panel_inner
+		));
+		
+		$panel->setAttribute('class', 'panel ' . $p['type']);
+		$panel->appendChild($panel_inner);
+		
+		return $panel;
 	}
 	
 	public static function buildPanelOptions($type, $panel_id) {

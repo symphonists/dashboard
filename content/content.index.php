@@ -24,7 +24,7 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 		$heading = new XMLElement('h2', __('Dashboard'));
 		$create_new = new XMLElement('a', __('Create Panel'), array(
 			'class'	=> 'create button',
-			'href'	=> URL . '/symphony/extension/dashboard/panel_config/?type=rss_reader'
+			'href'	=> '#'
 		));
 	
 		$panel_types = array();
@@ -51,24 +51,11 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 		
 		foreach($panels as $p) {
 			
-			$panel = new XMLElement('div', NULL, array('class' => 'panel', 'id' => 'id-' . $p['id']));
-			$panel_inner = new XMLElement('div', NULL, array('class' => 'panel-inner'));
-			
-			$panel->appendChild(new XMLElement('a', 'Edit', array('class' => 'panel-edit', 'href' => URL . '/symphony/extension/dashboard/panel_config/?id=' . $p['id'] . '&type=' . $p['type'])));
-			$panel->appendChild(new XMLElement('h3', $p['label']));
-			
-			Administration::instance()->ExtensionManager->notifyMembers('DashboardPanelRender', '/backend/', array(
-				'type'		=> $p['type'],
-				'config'	=> unserialize($p['config']),
-				'panel'		=> &$panel_inner
-			));
-			
-			$panel->setAttribute('class', 'panel ' . $p['type']);
-			$panel->appendChild($panel_inner);
+			$html = Extension_Dashboard::buildPanelHTML($p);
 			
 			switch($p['placement']) {
-				case 'primary': $primary->appendChild($panel); break;
-				case 'secondary': $secondary->appendChild($panel); break;
+				case 'primary': $primary->appendChild($html); break;
+				case 'secondary': $secondary->appendChild($html); break;
 			}
 			
 		}
