@@ -403,13 +403,16 @@ Class Extension_Dashboard extends Extension{
 				$sm = new SectionManager(Administration::instance());
 				$sections = $sm->fetch();
 				
+				$sections_count = 0;
+				if ($sections) $sections_count = count($sections);
+				
 				$entries = Administration::instance()->Database()->fetchRow(0, "SELECT count(id) AS `count` FROM tbl_entries");
 				
 				$pages = Administration::instance()->Database()->fetchRow(0, "SELECT count(id) AS `count` FROM tbl_pages");
 				
 				$dl = new XMLElement('dl');
 				$dl->appendChild(new XMLElement('dt', 'Sections'));
-				$dl->appendChild(new XMLElement('dd', (string)count($sections)));
+				$dl->appendChild(new XMLElement('dd', (string)$sections_count));
 				$dl->appendChild(new XMLElement('dt', 'Entries'));
 				$dl->appendChild(new XMLElement('dd', (string)$entries['count']));
 				$dl->appendChild(new XMLElement('dt', 'Data Sources'));
