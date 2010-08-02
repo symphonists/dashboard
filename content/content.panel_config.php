@@ -34,6 +34,8 @@ Class contentExtensionDashboardPanel_Config extends AjaxPage {
 				$p = Extension_Dashboard::getPanel($panel_id);
 				
 				$html = Extension_Dashboard::buildPanelHTML($p);
+				$class = $html->getAttribute('class');
+				$html->setAttribute('class', $class . ' new-panel');
 				
 				$response->setValue(
 					sprintf('<![CDATA[%s]]>', $html->generate())
