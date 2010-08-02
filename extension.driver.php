@@ -108,6 +108,8 @@ Class Extension_Dashboard extends Extension{
 	public static function savePanel($panel=NULL, $config=NULL) {
 		if ($panel['id'] == '') {
 			
+			$max_sort_order = Symphony::Database()->fetchCol('max_sort_order', 'SELECT MAX(sort_order) AS `max_sort_order` from tbl_dashboard_panels');
+			
 			Symphony::Database()->query(sprintf(
 				"INSERT INTO tbl_dashboard_panels 
 				(label, type, config, placement, sort_order)
@@ -116,7 +118,7 @@ Class Extension_Dashboard extends Extension{
 				Symphony::Database()->cleanValue($panel['type']),
 				serialize($config),
 				Symphony::Database()->cleanValue($panel['placement']),
-				0
+				$max_sort_order++
 			));
 			
 			return Symphony::Database()->getInsertID();
