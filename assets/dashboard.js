@@ -2,6 +2,7 @@ var Dashboard = {
 	
 	$dashboard: null,
 	$h2: null,
+	edit_mode: false,
 	
 	init: function() {
 		var self = this;
@@ -10,10 +11,46 @@ var Dashboard = {
 		this.$h2 = jQuery('h2:first');
 		
 		// Create New button
-		jQuery('a.create').bind('click', function(e) {
+		jQuery('a.edit-mode').bind('click', function(e) {
 			e.preventDefault();		
-			var panel_type = self.$h2.find('select').val();
-			self.showEditForm(panel_type);
+			self.edit_mode = !self.edit_mode;
+			
+			var text = jQuery(this).text();
+			var title = jQuery(this).attr('title');
+			
+			jQuery(this).text(title).attr('title', text);
+			
+			if (self.edit_mode === true) {
+				self.$dashboard.addClass('edit');
+				jQuery('.primary, .secondary').sortable('enable');
+			} else {
+				self.$dashboard.removeClass('edit');
+				jQuery('.primary, .secondary').sortable('disable');
+			}
+			
+		});
+		
+		// Create New button
+		jQuery('#select-panel-type li').live('click', function(e) {
+			e.preventDefault();		
+			self.showEditForm(jQuery(this).attr('class'));
+		});
+		
+		jQuery('a[id^="select-"]').each(function(e) {
+			var button = jQuery(this);
+			var id = button.attr('id').replace(/select-/,'');
+			var html = jQuery('<div class="create button select-button" id="select-'+id+'"><span>'+button.text()+' &darr;</span><ul/></div>');
+			
+			button.after(html).remove();
+			
+			var select = jQuery('select[name="'+id+'"]').addClass('hide');
+			
+			var button = jQuery('#select-' + id);
+			var ul = button.find('ul');
+			select.find('option').each(function(i, el) {
+				var option = jQuery(el);
+				ul.append('<li class="'+option.attr('value')+'">'+option.text()+'</li>');
+			});
 		});
 
 		// Edit panel button
@@ -54,6 +91,7 @@ var Dashboard = {
 			placeholder: 'panel-placeholder',
 			handle: '> h3',
 			revert: 200,
+			disabled: true,
 			stop: function() {
 				self.saveReordering();
 			}

@@ -147,7 +147,7 @@ Class Extension_Dashboard extends Extension{
 		
 		$panel = new XMLElement('div', NULL, array('class' => 'panel', 'id' => 'id-' . $p['id']));
 		$panel->appendChild(new XMLElement('a', 'Edit', array('class' => 'panel-edit', 'href' => URL . '/symphony/extension/dashboard/panel_config/?id=' . $p['id'] . '&type=' . $p['type'])));
-		$panel->appendChild(new XMLElement('h3', ($p['label'] == '') ? __('Untitled Panel') : $p['label']));
+		$panel->appendChild(new XMLElement('h3', (($p['label'] == '') ? __('Untitled Panel') : $p['label']) . ('<span>'.__('drag to re-order').'</span>')));
 		
 		$panel_inner = new XMLElement('div', NULL, array('class' => 'panel-inner'));
 		

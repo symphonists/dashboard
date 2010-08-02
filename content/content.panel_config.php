@@ -41,11 +41,8 @@ Class contentExtensionDashboardPanel_Config extends AjaxPage {
 					sprintf('<![CDATA[%s]]>', $html->generate())
 				);
 			}
-			
 			elseif(isset($_POST['action']['delete'])) {
-				
 				Extension_Dashboard::deletePanel($panel);
-				
 			}
 			
 			header('Content-Type: text/xml');

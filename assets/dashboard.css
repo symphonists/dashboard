@@ -17,7 +17,7 @@ h2 select {
 	font-size: 80%;
 	width: auto;
 	float: right;
-	margin-right: 10px;
+	margin: 0 5px 0 15px;
 }
 
 #save-panel {
@@ -98,6 +98,16 @@ h2 select {
 	font-size: 110%;
 	font-weight: normal;
 	margin: 0 0 5px 5px;
+}
+
+.panel h3 span {
+	color: #aaa;
+	margin: 0 0 0 5px;
+	font-size: 90%;
+	display: none;
+}
+
+#dashboard.edit .panel h3 {
 	cursor: move;
 }
 
@@ -108,6 +118,15 @@ h2 select {
 	color: #aaa;
 	z-index: 1;
 	text-decoration: none;
+	display: none;
+}
+
+#dashboard.edit .panel a.panel-edit {
+	display: block;
+}
+
+#dashboard.edit .panel h3 span {
+	display: inline;
 }
 
 .panel a.panel-edit:hover {
@@ -121,6 +140,89 @@ h2 select {
 	border-radius: 5px;
 	position: relative;
 	padding: 10px;
+}
+
+div.create {
+	margin-left: 5px;
+}
+
+.select-button {
+	background-color: #81b934;
+	color: #fff;
+	float: right;
+	padding: 0 1em .1em 1em;
+	margin: 0;
+	line-height: 2em;
+	height: 2em;
+	font-size: .7em;
+	text-decoration: none;
+	text-shadow: none;
+	cursor: pointer;
+	border-radius: 1em;
+	-moz-border-radius: 1em;
+	-webkit-border-radius: 1em;
+	position: relative;
+	cursor: default;
+}
+
+.select-button:hover {
+	-webkit-border-bottom-right-radius: 0;
+	-webkit-border-bottom-left-radius: 0;
+	-moz-border-radius-bottomright: 0;
+	-moz-border-radius-bottomleft: 0;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+.select-button:hover,
+.select-button.active {
+	padding-bottom: .3em;
+}
+
+.select-button:hover ul {
+	display: block;
+}
+
+.select-button ul {
+	position: absolute;
+	top: 2.3em;
+	right: 0;
+	list-style-type: none;
+	z-index: 99;
+	margin: 0;
+	display: none;
+}
+
+.select-button ul li {
+	white-space: nowrap;
+	padding: 3px 9px;
+	background-color: #81b934;
+	cursor: pointer;
+}
+
+.select-button ul li:hover {
+	background: #6c9c29;
+}
+
+.select-button li:first-child {
+	-webkit-border-top-left-radius: 1em;
+	-moz-border-radius-topleft: 1em;
+	border-top-left-radius: 1em;
+}
+
+.select-button li:last-child {
+	-webkit-border-bottom-right-radius: 1em;
+	-webkit-border-bottom-left-radius: 1em;
+	-moz-border-radius-bottomright: 1em;
+	-moz-border-radius-bottomleft: 1em;
+	border-bottom-right-radius: 1em;
+	border-bottom-left-radius: 1em;
+}
+
+select.hide {
+	position: absolute;
+	top: -9999em;
+	left: -9999em;
 }
 
 /* PANEL: Datasource to Table */

@@ -19,9 +19,11 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 		$this->addScriptToHead(URL . '/extensions/dashboard/assets/dashboard.js', 29423);
 		
 		$heading = new XMLElement('h2', __('Dashboard'));
-		$create_new = new XMLElement('a', __('Create Panel'), array(
+		
+		$create_new = new XMLElement('a', __('Create New'), array(
 			'class'	=> 'create button',
-			'href'	=> '#'
+			'href'	=> '#',
+			'id'	=> 'select-panel-type'
 		));
 	
 		$panel_types = array();
@@ -36,6 +38,16 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 	
 		$heading->appendChild($create_new);
 		$heading->appendChild(Widget::Select('panel-type', $panel_types_options));
+		
+		if(Administration::instance()->Author->isDeveloper()) {
+			$heading->appendChild(
+				new XMLElement('a', __('Enable Edit Mode'), array(
+					'class'	=> 'edit-mode button',
+					'href'	=> '#',
+					'title' => __('Disable Edit Mode')
+				))
+			);
+		}
 		
 		$this->Form->appendChild($heading);
 		
