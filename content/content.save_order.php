@@ -13,7 +13,6 @@ Class contentExtensionDashboardSave_Order extends AdministrationPage {
 		
 		$panels = $_POST['panel'];
 		foreach($panels as $panel) {
-			//var_dump($panel);die;
 			Extension_Dashboard::updatePanelOrder($panel['id'], $panel['placement'], $panel['sort_order']);
 		}
 		die;
