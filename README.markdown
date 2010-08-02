@@ -17,10 +17,11 @@ To provide a Dashboard summary screen for users. Dashboard "panels" can contain 
 
 ## Core panel types
 
-There are four core panel types:
+There are five core panel types:
 
 * **Datasource to Table** takes a Symphony Data Source and attempts to render it as an HTML table. This works best with basic fields such as Text Input, Checkboxes and Dates. The first column will link to the entry itself.
 * **HTML Block** allows you to specify the URL of a page that outputs a chunk of HTML (a `<div />` perhaps) to include in the panel
+* **Markdown Text Block** allows you to add Markdown-formatted text to include in the panel
 * **RSS Feed Reader** parses an RSS feed and renders the summary. Useful for latest news or updates.
 * **Symphony Overview** renders basic statistics about your installation such as version number and total number of entries.
 

@@ -182,6 +182,7 @@ Class Extension_Dashboard extends Extension{
 		$context['types']['datasource_to_table'] = 'Datasource to Table';
 		$context['types']['rss_reader'] = 'RSS Feed Reader';
 		$context['types']['html_block'] = 'HTML Block';
+		$context['types']['markdown_text'] = 'Markdown Text';
 		$context['types']['symphony_overview'] = 'Symphony Overview';
 	}
 
@@ -240,6 +241,29 @@ Class Extension_Dashboard extends Extension{
 				$fieldset->appendChild($label);
 								
 				$label = Widget::Label('Cache (minutes)', Widget::Input('config[cache]', (int)$config['cache']));
+				$fieldset->appendChild($label);
+
+				$context['form'] = $fieldset;
+
+			break;
+			
+			case 'markdown_text':
+			
+				$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
+				$fieldset->appendChild(new XMLElement('legend', 'Markdown Text Block'));
+				
+				require_once(TOOLKIT . '/class.textformattermanager.php');
+				$tfm = new TextformatterManager(Administration::instance());
+				$formatters = array();
+				foreach($tfm->listAll() as $tf) $formatters[] = array($tf['handle'], ($config['formatter'] == $tf['handle']), $tf['name']);
+
+				$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
+				$fieldset->appendChild(new XMLElement('legend', 'Data Source to Table'));
+				
+				$label = Widget::Label('Text Formatter', Widget::Select('config[formatter]', $formatters));
+				$fieldset->appendChild($label);
+				
+				$label = Widget::Label('Text', Widget::Textarea('config[text]', 6, 25, $config['text']));
 				$fieldset->appendChild($label);
 
 				$context['form'] = $fieldset;
@@ -400,6 +424,18 @@ Class Extension_Dashboard extends Extension{
 				
 				$context['panel']->appendChild($container);
 				
+			break;
+			
+			case 'markdown_text':
+
+				require_once(TOOLKIT . '/class.textformattermanager.php');
+				$tfm = new TextformatterManager(Administration::instance());
+				
+				$formatter = $tfm->create($config['formatter']);
+				$html = $formatter->run($config['text']);
+
+				$context['panel']->appendChild(new XMLElement('div', $html));
+			
 			break;
 			
 		}
