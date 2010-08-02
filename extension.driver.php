@@ -4,8 +4,8 @@ Class Extension_Dashboard extends Extension{
 	
 	public function about() {
 		return array('name' => 'Dashboard',
-					 'version' => '1.0',
-					 'release-date' => '2010-07-28',
+					 'version' => '1.1',
+					 'release-date' => '2010-08-02',
 					 'author' => array('name' => 'Nick Dunn',
 									   'website' => 'http://nick-dunn.co.uk',
 									   'email' => ''),
