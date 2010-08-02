@@ -92,6 +92,9 @@ var Dashboard = {
 			handle: '> h3',
 			revert: 200,
 			disabled: true,
+			start: function(event, ui) {
+				jQuery('.panel-placeholder').height(ui.helper.height() + parseInt(ui.helper.css('margin-top')));
+			},
 			stop: function() {
 				self.saveReordering();
 			}
