@@ -60,6 +60,8 @@ h2 select {
 #dashboard .sortable-container {
 	padding: 5px 10px;
 	border: 2px dashed #fff;
+	-moz-border-radius: 7px;
+	-webkit-border-radius: 7px;
 	min-height: 85px;
 }
 
@@ -68,7 +70,7 @@ h2 select {
 }
 
 #dashboard .sortable-container.active {
-	border: 2px dashed #aaa !important;
+	border: 2px dashed #ccc !important;
 }
 
 .panel {
