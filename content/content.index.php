@@ -14,12 +14,9 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 		$this->setPageType('form');
 		$this->setTitle(__('Symphony') . ' &ndash; ' . __('Dashboard'));
 		
-		$this->addScriptToHead(URL . '/extensions/dashboard/assets/jquery-ui-1.8.2.custom.min.js', 948132);
-		$this->addScriptToHead(URL . '/extensions/dashboard/assets/fancybox/jquery.fancybox-1.3.1.js', 948133);
-		$this->addStylesheetToHead(URL . '/extensions/dashboard/assets/fancybox/jquery.fancybox-1.3.1.css', 'screen', 948134);
-		
-		$this->addStylesheetToHead(URL . '/extensions/dashboard/assets/dashboard.css', 'screen', 948131);
-		$this->addScriptToHead(URL . '/extensions/dashboard/assets/dashboard.js', 948132);
+		$this->addScriptToHead(URL . '/extensions/dashboard/assets/jquery-ui-1.8.2.custom.min.js', 29421);
+		$this->addStylesheetToHead(URL . '/extensions/dashboard/assets/dashboard.css', 'screen', 29422);
+		$this->addScriptToHead(URL . '/extensions/dashboard/assets/dashboard.js', 29423);
 		
 		$heading = new XMLElement('h2', __('Dashboard'));
 		$create_new = new XMLElement('a', __('Create Panel'), array(
