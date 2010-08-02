@@ -1,8 +1,8 @@
 # Dashboard
  
-Version: 1.0  
+Version: 1.1  
 Author: Nick Dunn  
-Build Date: 2010-07-28  
+Build Date: 2010-08-02  
 Requirements: Symphony 2.1.0
 
 ## Purpose
@@ -94,3 +94,9 @@ Subscribe to the `DashboardPanelRender` delegate to actually render your panel.
 	}
 
 First check that you should output your own panel. `$context['panel']` contains an `XMLElement` that is a panel container to which you can append children. The saved configuration for the panel is presented in the `$context['config']` array.
+
+* * *
+
+## Known issues
+* when selecting an item from the Create New menu, the menu does not disappear until it loses focus
+* adding more than one Markdown Text Panel produces a PHP error
