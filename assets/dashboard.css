@@ -81,6 +81,10 @@ h2 select {
 	position: relative;
 }
 
+.new-panel {
+	display: none;
+}
+
 .panel-placeholder {
 	background: #f1f1f1;
 	-moz-border-radius: 7px;
