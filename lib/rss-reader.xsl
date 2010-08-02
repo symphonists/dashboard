@@ -6,17 +6,39 @@
 <xsl:template match="/">
 	
 	<xsl:choose>
-		<xsl:when test="$show='all'">
-			<xsl:apply-templates select="//item"/>
+		<xsl:when test="$show='full-all'">
+			<xsl:apply-templates select="//item" mode="full"/>
+		</xsl:when>
+		<xsl:when test="contains($show,'full')">
+			<xsl:apply-templates select="//item[position() &lt;= substring-after($show,'-')]" mode="full"/>
+		</xsl:when>
+		<xsl:when test="$show='list-all'">
+			<ul>
+				<xsl:apply-templates select="//item" mode="list"/>
+			</ul>
+		</xsl:when>
+		<xsl:when test="contains($show,'list')">
+			<ul>
+				<xsl:apply-templates select="//item[position() &lt;= substring-after($show,'-')]" mode="list"/>
+			</ul>
 		</xsl:when>
 		<xsl:otherwise>
-			<xsl:apply-templates select="//item[position() &lt;= $show]"/>
+			
 		</xsl:otherwise>
 	</xsl:choose>
 	
 </xsl:template>
 
-<xsl:template match="item">
+<xsl:template match="item" mode="list">
+	
+	<li>
+		<a href="{link}"><xsl:value-of select="title"/></a>
+		<span class="date"><xsl:value-of select="pubDate"/></span>
+	</li>
+	
+</xsl:template>
+
+<xsl:template match="item" mode="full">
 	
 	<h5>
 		<a href="{link}">

@@ -274,6 +274,15 @@ select.hide {
 	margin: -1px 0 0 0;
 }
 
+.rss_reader ul {
+	margin: 0 0 0 15px;
+}
+
+.rss_reader ul span.date {
+	color: #aaa;
+	margin: 0 0 0 5px;
+}
+
 /* PANEL: Symphony Overview */
 
 .symphony_overview h4 {

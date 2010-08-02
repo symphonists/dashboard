@@ -217,12 +217,28 @@ Class Extension_Dashboard extends Extension{
 				$label = Widget::Label('Feed URL', Widget::Input('config[url]', $config['url']));
 				$fieldset->appendChild($label);
 				
-				$label = Widget::Label('Items to display', Widget::Select('config[show]', array(
-					array('all', ($config['show'] == 'all'), 'All items'),
-					array('3', ($config['show'] == '3'), '3 items'),
-					array('5', ($config['show'] == '5'), '5 items'),
-					array('10', ($config['show'] == '10'), '10 items')
-				)));
+				$label = Widget::Label('Items to display', Widget::Select('config[show]',
+					array(
+						array(
+							'label' => 'Full view',
+							'options' => array(
+								array('full-all', ($config['show'] == 'full-all'), 'All items'),
+								array('full-3', ($config['show'] == 'full-3'), '3 items'),
+								array('full-5', ($config['show'] == 'full-5'), '5 items'),
+								array('full-10', ($config['show'] == 'full-10'), '10 items')
+							)
+						),
+						array(
+							'label' => 'List view',
+							'options' => array(
+								array('list-all', ($config['show'] == 'list-all'), 'All items'),
+								array('list-3', ($config['show'] == 'list-3'), '3 items'),
+								array('list-5', ($config['show'] == 'list-5'), '5 items'),
+								array('list-10', ($config['show'] == 'list-10'), '10 items')
+							)
+						),
+					)				
+				));
 				$fieldset->appendChild($label);
 				
 				$label = Widget::Label('Cache feed XML (minutes)', Widget::Input('config[cache]', (int)$config['cache']));

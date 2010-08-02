@@ -215,7 +215,7 @@ var Dashboard = {
 										jQuery(this).remove();
 										jQuery('.' + placement).append(html);
 									}
-									jQuery('#id-' + id).hide().fadeIn('fast');
+									jQuery('#id-' + id).hide().removeClass('new-panel').fadeIn('fast');
 								});
 							}, true);
 						}
