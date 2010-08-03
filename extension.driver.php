@@ -146,7 +146,7 @@ Class Extension_Dashboard extends Extension{
 	public static function buildPanelHTML($p) {
 		
 		$panel = new XMLElement('div', NULL, array('class' => 'panel', 'id' => 'id-' . $p['id']));
-		$panel->appendChild(new XMLElement('a', 'Edit', array('class' => 'panel-edit', 'href' => URL . '/symphony/extension/dashboard/panel_config/?id=' . $p['id'] . '&type=' . $p['type'])));
+		$panel->appendChild(new XMLElement('a', __('Edit'), array('class' => 'panel-edit', 'href' => URL . '/symphony/extension/dashboard/panel_config/?id=' . $p['id'] . '&type=' . $p['type'])));
 		$panel->appendChild(new XMLElement('h3', (($p['label'] == '') ? __('Untitled Panel') : $p['label']) . ('<span>'.__('drag to re-order').'</span>')));
 		
 		$panel_inner = new XMLElement('div', NULL, array('class' => 'panel-inner'));
@@ -179,11 +179,11 @@ Class Extension_Dashboard extends Extension{
 	}
 	
 	public function dashboard_panel_types($context) {
-		$context['types']['datasource_to_table'] = 'Datasource to Table';
-		$context['types']['rss_reader'] = 'RSS Feed Reader';
-		$context['types']['html_block'] = 'HTML Block';
-		$context['types']['markdown_text'] = 'Markdown Text';
-		$context['types']['symphony_overview'] = 'Symphony Overview';
+		$context['types']['datasource_to_table'] = __('Data Source to Table');
+		$context['types']['rss_reader'] = __('RSS Reader');
+		$context['types']['html_block'] = __('HTML Block');
+		$context['types']['markdown_text'] = __('Markdown Text');
+		$context['types']['symphony_overview'] = __('Symphony Overview');
 	}
 
 	public function dashboard_panel_options($context) {
@@ -200,9 +200,9 @@ Class Extension_Dashboard extends Extension{
 				foreach($dsm->listAll() as $ds) $datasources[] = array($ds['handle'], ($config['datasource'] == $ds['handle']), $ds['name']);
 
 				$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
-				$fieldset->appendChild(new XMLElement('legend', 'Data Source to Table'));
+				$fieldset->appendChild(new XMLElement('legend', __('Data Source to Table')));
 				
-				$label = Widget::Label('Data Source', Widget::Select('config[datasource]', $datasources));
+				$label = Widget::Label(__('Data Source'), Widget::Select('config[datasource]', $datasources));
 				$fieldset->appendChild($label);
 
 				$context['form'] = $fieldset;
@@ -212,36 +212,36 @@ Class Extension_Dashboard extends Extension{
 			case 'rss_reader':
 			
 				$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
-				$fieldset->appendChild(new XMLElement('legend', 'RSS Reader'));
+				$fieldset->appendChild(new XMLElement('legend', __('RSS Reader')));
 				
-				$label = Widget::Label('Feed URL', Widget::Input('config[url]', $config['url']));
+				$label = Widget::Label(__('Feed URL'), Widget::Input('config[url]', $config['url']));
 				$fieldset->appendChild($label);
 				
-				$label = Widget::Label('Items to display', Widget::Select('config[show]',
+				$label = Widget::Label(__('Items to display'), Widget::Select('config[show]',
 					array(
 						array(
-							'label' => 'Full view',
+							'label' => __('Full view'),
 							'options' => array(
-								array('full-all', ($config['show'] == 'full-all'), 'All items'),
-								array('full-3', ($config['show'] == 'full-3'), '3 items'),
-								array('full-5', ($config['show'] == 'full-5'), '5 items'),
-								array('full-10', ($config['show'] == 'full-10'), '10 items')
+								array('full-all', ($config['show'] == 'full-all'), __('All items')),
+								array('full-3', ($config['show'] == 'full-3'), '3 ' . __('items')),
+								array('full-5', ($config['show'] == 'full-5'), '5 ' . __('items')),
+								array('full-10', ($config['show'] == 'full-10'), '10 ' . __('items'))
 							)
 						),
 						array(
-							'label' => 'List view',
+							'label' => __('List view'),
 							'options' => array(
-								array('list-all', ($config['show'] == 'list-all'), 'All items'),
-								array('list-3', ($config['show'] == 'list-3'), '3 items'),
-								array('list-5', ($config['show'] == 'list-5'), '5 items'),
-								array('list-10', ($config['show'] == 'list-10'), '10 items')
+								array('list-all', ($config['show'] == 'list-all'), __('All items')),
+								array('list-3', ($config['show'] == 'list-3'), '3 ' . _('items')),
+								array('list-5', ($config['show'] == 'list-5'), '5 ' . __('items')),
+								array('list-10', ($config['show'] == 'list-10'), '10 ' . __('items'))
 							)
 						),
 					)				
 				));
 				$fieldset->appendChild($label);
 				
-				$label = Widget::Label('Cache feed XML (minutes)', Widget::Input('config[cache]', (int)$config['cache']));
+				$label = Widget::Label(__('Cache (minutes)'), Widget::Input('config[cache]', (int)$config['cache']));
 				$fieldset->appendChild($label);
 
 				$context['form'] = $fieldset;
@@ -251,12 +251,12 @@ Class Extension_Dashboard extends Extension{
 			case 'html_block':
 			
 				$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
-				$fieldset->appendChild(new XMLElement('legend', 'RSS Reader'));
+				$fieldset->appendChild(new XMLElement('legend', __('RSS Reader')));
 				
-				$label = Widget::Label('Page URL', Widget::Input('config[url]', $config['url']));
+				$label = Widget::Label(__('Page URL'), Widget::Input('config[url]', $config['url']));
 				$fieldset->appendChild($label);
 								
-				$label = Widget::Label('Cache (minutes)', Widget::Input('config[cache]', (int)$config['cache']));
+				$label = Widget::Label(__('Cache (minutes)'), Widget::Input('config[cache]', (int)$config['cache']));
 				$fieldset->appendChild($label);
 
 				$context['form'] = $fieldset;
@@ -266,7 +266,7 @@ Class Extension_Dashboard extends Extension{
 			case 'markdown_text':
 			
 				$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
-				$fieldset->appendChild(new XMLElement('legend', 'Markdown Text Block'));
+				$fieldset->appendChild(new XMLElement('legend', __('Markdown Text Block')));
 				
 				require_once(TOOLKIT . '/class.textformattermanager.php');
 				$tfm = new TextformatterManager(Administration::instance());
@@ -274,12 +274,12 @@ Class Extension_Dashboard extends Extension{
 				foreach($tfm->listAll() as $tf) $formatters[] = array($tf['handle'], ($config['formatter'] == $tf['handle']), $tf['name']);
 
 				$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
-				$fieldset->appendChild(new XMLElement('legend', 'Data Source to Table'));
+				$fieldset->appendChild(new XMLElement('legend', __('Data Source to Table')));
 				
-				$label = Widget::Label('Text Formatter', Widget::Select('config[formatter]', $formatters));
+				$label = Widget::Label(__('Text Formatter'), Widget::Select('config[formatter]', $formatters));
 				$fieldset->appendChild($label);
 				
-				$label = Widget::Label('Text', Widget::Textarea('config[text]', 6, 25, $config['text']));
+				$label = Widget::Label(__('Text'), Widget::Textarea('config[text]', 6, 25, $config['text']));
 				$fieldset->appendChild($label);
 
 				$context['form'] = $fieldset;
@@ -302,9 +302,9 @@ Class Extension_Dashboard extends Extension{
 
 				$ds = @$dsm->create($config['datasource'], NULL, false);
 				if (!$ds) {
-					$context['panel']->appendChild(new XMLElement('div', sprintf(
-						"The Data Source with the name <code>%s</code> could not be found.",
-						$config['datasource']
+					$context['panel']->appendChild(new XMLElement('div', __(
+						'The Data Source with the name <code>%s</code> could not be found.',
+						array($config['datasource'])
 					)));
 					return;
 				}
@@ -402,11 +402,11 @@ Class Extension_Dashboard extends Extension{
 				$container = new XMLElement('div');
 				
 				$dl = new XMLElement('dl');
-				$dl->appendChild(new XMLElement('dt', 'Site name'));
+				$dl->appendChild(new XMLElement('dt', __('Website Name')));
 				$dl->appendChild(new XMLElement('dd', Symphony::Configuration()->get('sitename', 'general')));
-				$dl->appendChild(new XMLElement('dt', 'Version'));
+				$dl->appendChild(new XMLElement('dt', __('Version')));
 				$dl->appendChild(new XMLElement('dd', Symphony::Configuration()->get('version', 'symphony')));
-				$container->appendChild(new XMLElement('h4', 'Configuration'));
+				$container->appendChild(new XMLElement('h4', __('Configuration')));
 				$container->appendChild($dl);
 				
 				require_once(TOOLKIT . '/class.datasourcemanager.php');
@@ -427,18 +427,18 @@ Class Extension_Dashboard extends Extension{
 				$pages = Administration::instance()->Database()->fetchRow(0, "SELECT count(id) AS `count` FROM tbl_pages");
 				
 				$dl = new XMLElement('dl');
-				$dl->appendChild(new XMLElement('dt', 'Sections'));
+				$dl->appendChild(new XMLElement('dt', __('Sections')));
 				$dl->appendChild(new XMLElement('dd', (string)$sections_count));
-				$dl->appendChild(new XMLElement('dt', 'Entries'));
+				$dl->appendChild(new XMLElement('dt', __('Entries')));
 				$dl->appendChild(new XMLElement('dd', (string)$entries['count']));
-				$dl->appendChild(new XMLElement('dt', 'Data Sources'));
+				$dl->appendChild(new XMLElement('dt', __('Data Sources')));
 				$dl->appendChild(new XMLElement('dd', (string)count($dsm->listAll())));
-				$dl->appendChild(new XMLElement('dt', 'Events'));
+				$dl->appendChild(new XMLElement('dt', __('Events')));
 				$dl->appendChild(new XMLElement('dd', (string)count($em->listAll())));
-				$dl->appendChild(new XMLElement('dt', 'Pages'));
+				$dl->appendChild(new XMLElement('dt', __('Pages')));
 				$dl->appendChild(new XMLElement('dd', (string)$pages['count']));
 				
-				$container->appendChild(new XMLElement('h4', 'Statistics'));
+				$container->appendChild(new XMLElement('h4', __('Statistics')));
 				$container->appendChild($dl);
 				
 				$context['panel']->appendChild($container);

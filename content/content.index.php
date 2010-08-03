@@ -50,10 +50,10 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 		
 		if(Administration::instance()->Author->isDeveloper()) {
 			$heading->appendChild(
-				new XMLElement('a', __('Enable Edit Mode'), array(
+				new XMLElement('a', __('Edit'), array(
 					'class'	=> 'edit-mode button',
 					'href'	=> '#',
-					'title' => __('Disable Edit Mode')
+					'title' => __('Save Changes')
 				))
 			);
 		}

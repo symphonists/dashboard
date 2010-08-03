@@ -57,7 +57,7 @@ Class contentExtensionDashboardPanel_Config extends AjaxPage {
 
 			$container->appendChild(new XMLElement('div', NULL, array('class' => 'top')));
 
-			$heading = new XMLElement('h3', __('Panel Configuration'));
+			$heading = new XMLElement('h3', __('Configuration') . ' <span>' . __('Untitled Panel') . '<span>');
 			$container->appendChild($heading);
 
 			$panel_config = Extension_Dashboard::getPanel($id);
@@ -66,15 +66,15 @@ Class contentExtensionDashboardPanel_Config extends AjaxPage {
 			$primary = new XMLElement('div', NULL, array('class' => 'panel-config'));
 
 			$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
-			$legend = new XMLElement('legend', 'General settings');
+			$legend = new XMLElement('legend', __('General'));
 			$fieldset->appendChild($legend);
-			$fieldset->appendChild(Widget::Label('Panel Name',
+			$fieldset->appendChild(Widget::Label(__('Name'),
 				Widget::Input('panel[label]', $panel_config['label'])
 			));
-			$fieldset->appendChild(Widget::Label('Placement', 
+			$fieldset->appendChild(Widget::Label(__('Placement'), 
 				Widget::Select('panel[placement]', array(
-					array('primary', ($panel_config['placement'] == 'primary'), 'Main Column'),
-					array('secondary', ($panel_config['placement'] == 'secondary'), 'Sidebar')
+					array('primary', ($panel_config['placement'] == 'primary'), __('Main content')),
+					array('secondary', ($panel_config['placement'] == 'secondary'), __('Sidebar'))
 				))
 			));
 			$primary->appendChild($fieldset);
@@ -82,10 +82,10 @@ Class contentExtensionDashboardPanel_Config extends AjaxPage {
 			if ($config_options) $primary->appendChild($config_options);
 
 			$actions = new XMLElement('div', NULL, array('class' => 'actions'));
-			$actions->appendChild(Widget::Input('action[submit]', 'Save Panel', 'submit'));
-			$actions->appendChild(Widget::Input('action[cancel]', 'Cancel', 'submit'));
+			$actions->appendChild(Widget::Input('action[submit]', __('Save Panel'), 'submit'));
+			$actions->appendChild(Widget::Input('action[cancel]', __('Cancel'), 'submit'));
 			if ($id) {
-				$actions->appendChild(new XMLElement('button', 'Delete Panel', array(
+				$actions->appendChild(new XMLElement('button', __('Delete Panel'), array(
 					'class' => 'delete',
 					'name' => 'action[delete]'
 				)));
