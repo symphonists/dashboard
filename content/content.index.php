@@ -18,8 +18,17 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 		$this->addStylesheetToHead(URL . '/extensions/dashboard/assets/dashboard.css', 'screen', 29422);
 		$this->addScriptToHead(URL . '/extensions/dashboard/assets/dashboard.js', 29423);
 		
-		$heading = new XMLElement('h2', __('Dashboard'));
+		// Add welcome message
+		$hour = date('H');
+		$welcome = __('Nice to meet you');
+		if(Administration::instance()->Author->get('last_seen') != NULL) {
+			if($hour < 10) $welcome = __('Good morning');
+			elseif($hour < 17) $welcome = __('Welcome back');
+			else $welcome = __('Good evening');
+		}
+		$heading = new XMLElement('h2', $welcome . ', ' . Administration::instance()->Author->get('first_name'));
 		
+		// Create new button
 		$create_new = new XMLElement('a', __('Create New'), array(
 			'class'	=> 'create button',
 			'href'	=> '#',
