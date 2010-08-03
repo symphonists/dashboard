@@ -106,7 +106,7 @@
 				revert: 200,
 				disabled: true,
 				start: function(event, ui) {
-					jQuery('.panel-placeholder').height(ui.helper.height() + parseInt(ui.helper.css('margin-top')));
+					jQuery('.panel-placeholder').height(ui.helper.height() + parseInt(ui.helper.css('padding-top')) + parseInt(ui.helper.css('padding-bottom')) + parseInt(ui.helper.css('border-top-width')) + parseInt(ui.helper.css('border-bottom-width')));
 				},
 				stop: function() {
 					self.saveReordering();
@@ -188,7 +188,7 @@
 		
 		revealEditForm: function(html) {
 			// fade down dashboard panels to give edit form more priority
-			this.$dashboard.fadeTo('fast', 0.5);
+			this.$dashboard.fadeTo('fast', 0.25);
 			// append form to page (hidden with CSS)
 			this.$h2.after(html);
 			jQuery('#save-panel').slideDown();

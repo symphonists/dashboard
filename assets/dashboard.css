@@ -14,6 +14,7 @@ h2 {
 	margin-right: -19px;
 	padding-left: 19px;
 	padding-right: 19px;
+	
 	-moz-box-shadow: 0 3px 8px #f5f5f4;
 	-webkit-box-shadow: 0 3px 8px #f5f5f4;
 	border-bottom: 1px solid #E6E6E5;
@@ -27,47 +28,42 @@ h2 select {
 }
 
 #save-panel {
-	background: #353533;
+	background: #fbfbfb;
 	z-index: 90;
 	position: relative;
-	-moz-box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.5);
-	-webkit-box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.5);
-	border-top: 1px solid #000;
-	border-bottom: 1px solid #000;
 	margin: 0 -19px;
 	padding: 0 19px;
 	display: none;
 	overflow: hidden;
+	
+	-moz-box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.05);
+	-webkit-box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.1);
+	border-bottom: 1px solid #ddd;
 }
 
 #save-panel h3 {
 	font-size: 120%;
-	color: #aaa;
+	color: #555;
 	text-shadow: none;
 	font-weight: normal;
 	padding: 15px 0 12px;
-	border-bottom: 1px solid #616057;
+	border-bottom: 1px solid #ddd;
 	position: relative;
 }
 
 #save-panel h3 span {
-	color: #fff;
 	left: 275px;
 	position: absolute;
 }
 
 #save-panel fieldset {
 	border: 1px solid transparent;
-	border-bottom: 1px solid #616057;
+	border-bottom: 1px solid #eee;
+	overflow: hidden;
 }
 
 #save-panel legend {
 	text-shadow: none;
-	color: #aaa;
-}
-
-#save-panel label {
-	color: #fff;
 }
 
 #save-panel a {
@@ -90,37 +86,54 @@ h2 select {
 #dashboard {
 	overflow: hidden;
 	margin: 0 -19px;
+	padding: 10px;
 }
 
 #dashboard .sortable-container {
 	padding-top: 0;
-	margin: 10px 0;
 }
 
 #dashboard .sortable-container {
 	padding: 5px 10px;
-	border: 2px dashed #fff;
-	-moz-border-radius: 7px;
-	-webkit-border-radius: 7px;
-	min-height: 85px;
-}
-
-#dashboard .sortable-container.hover {
-	border: 2px dashed #eee;
-}
-
-#dashboard .sortable-container.active {
-	border: 2px dashed #ccc !important;
-}
-
-.panel {
-	background: #ddd;
+	border: 1px solid #fff;
+	min-height: 200px;
+	
 	-moz-border-radius: 7px;
 	-webkit-border-radius: 7px;
 	border-radius: 7px;
-	padding: 5px;
+}
+
+#dashboard .sortable-container.hover {
+	border: 1px solid #eee;
+	background: #fafafa;
+}
+
+#dashboard .sortable-container.active {
+	border: 1px solid #ccc !important;
+}
+
+.panel {
+	background: #FBFBFB;
+	border: 1px solid #bbb;
 	margin: 10px 0;
 	position: relative;
+	
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.panel-inner {
+	overflow: hidden;
+	padding: 10px;
+	
+	background: -moz-linear-gradient(#fbfbfb, #eee);
+	-moz-border-radius-bottomleft: 4px;
+	-moz-border-radius-bottomright: 4px;
+	-webkit-border-radius-bottomleft: 4px;
+	-webkit-border-radius-bottomright: 4px;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
 }
 
 .new-panel {
@@ -128,22 +141,34 @@ h2 select {
 }
 
 .panel-placeholder {
-	background: #f1f1f1;
+	background: #eee;
+	margin: 10px 0;
+	
 	-moz-border-radius: 7px;
 	-webkit-border-radius: 7px;
 	border-radius: 7px;
-	min-height: 60px;
-	margin: 10px 0;
 }
 
 .panel h3 {
 	font-size: 110%;
 	font-weight: normal;
-	margin: 0 0 5px 5px;
+	text-shadow: none;
+	margin: 0;
+	padding: 4px 10px;
+	color: #555;
+	
+	border-top: 1px solid #dadada;
+	border-bottom: 1px solid #999;
+	
+	-moz-border-radius: 4px;	
+	-moz-border-radius-bottomleft: 0;
+	-moz-border-radius-bottomright: 0;
+	
+	background: -moz-linear-gradient(#CCCCCC, #BBBBBB);
 }
 
 .panel h3 span {
-	color: #aaa;
+	color: #999;
 	margin: 0 0 0 5px;
 	font-size: 90%;
 	display: none;
@@ -155,9 +180,9 @@ h2 select {
 
 .panel a.panel-edit {
 	position: absolute;
-	top: 7px;
+	top: 5px;
 	right: 12px;
-	color: #aaa;
+	color: #999;
 	z-index: 1;
 	text-decoration: none;
 	display: none;
@@ -173,15 +198,6 @@ h2 select {
 
 .panel a.panel-edit:hover {
 	color: #666;
-}
-
-.panel-inner {
-	background: #f9f9f9;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
-	position: relative;
-	padding: 10px;
 }
 
 div.create {
@@ -200,18 +216,19 @@ div.create {
 	text-decoration: none;
 	text-shadow: none;
 	cursor: pointer;
-	border-radius: 1em;
-	-moz-border-radius: 1em;
-	-webkit-border-radius: 1em;
 	position: relative;
 	cursor: default;
+	
+	-moz-border-radius: 1em;
+	-webkit-border-radius: 1em;
+	border-radius: 1em;
 }
 
 .select-button:hover {
-	-webkit-border-bottom-right-radius: 0;
-	-webkit-border-bottom-left-radius: 0;
 	-moz-border-radius-bottomright: 0;
 	-moz-border-radius-bottomleft: 0;
+	-webkit-border-bottom-right-radius: 0;
+	-webkit-border-bottom-left-radius: 0;	
 	border-bottom-right-radius: 0;
 	border-bottom-left-radius: 0;
 }
@@ -247,16 +264,16 @@ div.create {
 }
 
 .select-button li:first-child {
-	-webkit-border-top-left-radius: 1em;
 	-moz-border-radius-topleft: 1em;
+	-webkit-border-top-left-radius: 1em;
 	border-top-left-radius: 1em;
 }
 
 .select-button li:last-child {
-	-webkit-border-bottom-right-radius: 1em;
-	-webkit-border-bottom-left-radius: 1em;
 	-moz-border-radius-bottomright: 1em;
 	-moz-border-radius-bottomleft: 1em;
+	-webkit-border-bottom-right-radius: 1em;
+	-webkit-border-bottom-left-radius: 1em;
 	border-bottom-right-radius: 1em;
 	border-bottom-left-radius: 1em;
 }
