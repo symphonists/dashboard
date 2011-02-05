@@ -81,6 +81,8 @@ h2 select {
 
 #save-panel .actions {
 	border: none;
+	overflow: hidden;
+	padding: 7px 0 14px 0;
 }
 
 #dashboard {
@@ -157,14 +159,21 @@ h2 select {
 	padding: 4px 10px;
 	color: #555;
 	
-	border-top: 1px solid #dadada;
-	border-bottom: 1px solid #999;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #bbb;
 	
 	-moz-border-radius: 4px;	
 	-moz-border-radius-bottomleft: 0;
 	-moz-border-radius-bottomright: 0;
 	
-	background: -moz-linear-gradient(#CCCCCC, #BBBBBB);
+	-webkit-border-radius: 4px;	
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	
+	background: #ddd;
+	background-image: -moz-linear-gradient(center bottom, #eee, #ddd);
+	
+	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #ddd), color-stop(1, #eee));
 }
 
 .panel h3 span {
@@ -235,7 +244,8 @@ div.create {
 
 .select-button:hover,
 .select-button.active {
-	padding-bottom: .3em;
+	padding-bottom: 3px;
+	margin-bottom: -3px;
 }
 
 .select-button:hover ul {
@@ -244,7 +254,7 @@ div.create {
 
 .select-button ul {
 	position: absolute;
-	top: 2.3em;
+	top: 100%;
 	right: 0;
 	list-style-type: none;
 	z-index: 99;
