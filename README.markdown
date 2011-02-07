@@ -14,6 +14,9 @@ To provide a Dashboard summary screen for users. Dashboard "panels" can contain 
 2. Enable it by selecting "Dashboard" in the list, choose Enable from the with-selected menu, then click Apply
 3. Navigate to the Dashboard from the "Dashboard" link in the primary navigation
 
+## Setting the Dashboard as the user's default
+
+Once installed "Dashboard" will appear in the "Default area" dropdown when you create a new author. If you choose this, the author will be shown the dashboard when they log in.
 
 ## Core panel types
 
@@ -51,19 +54,20 @@ To provide panels your extension needs to implement (subscribe to) three delegat
 
 ### DashboardPanelTypes
 
-The callback function should return the handle and name of your panel(s):
+The callback function should return the handle and name of your panel(s) by adding a new key to the `types` array:
 
 	public function dashboard_panel_types($context) {
 		$context['types']['my_dashboard_panel'] = 'My Amazing Dashboard Panel';
 	}
 
-This will create a panel of type `my_dashboard_panel`. Make this name as unique as possible so it doesn't conflict with others.
+This will define a panel of type `my_dashboard_panel`. Make this name as unique as possible so it doesn't conflict with others.
 
 ### DashboardPanelOptions
 
-Each panel has a configuration screen. There are default options for all panels (Label and Position), but you can add additional elements to the configuration form using the `DashboardPanelOptions` delegate:
+Each panel has a configuration screen. There are default options for all panels ("Label" and "Position"), but you can add additional elements to the configuration form using the `DashboardPanelOptions` delegate:
 
 	public function dashboard_panel_options($context) {
+		// make sure it's your own panel type, as this delegate fires for all panel types!
 		if ($context['type'] != 'my_dashboard_panel') return;
 		
 		$config = $context['existing_config'];
@@ -78,13 +82,13 @@ Each panel has a configuration screen. There are default options for all panels 
 	
 	}
 
-The above code creates a fieldset which will be appended to the panel configuration form. The fielset contains a single textfield "Option 1". The `$config` array contains existing saved config, so you can pre-populate your form fields when editing an existing panel.
+The above code creates a fieldset which will be appended to the panel configuration form. The fieldset contains a single textfield with the label "Option 1". The `$config` array contains existing saved options, so you can pre-populate your form fields when editing an existing panel.
 
-Upon saving any form fields prefixed with `config` will be saved with this panel instance, and provided to the panel when it renders.
+Upon saving, all form fields named in the `config[...]` array will be saved with this panel instance, and provided to the panel as an array when it renders.
 
 ### DashboardPanelRender
 
-Subscribe to the `DashboardPanelRender` delegate to actually render your panel.
+Subscribe to the `DashboardPanelRender` delegate to render your panel on the dashboard.
 
 	public function render_panel($context) {
 		if ($context['type'] != 'my_dashboard_panel') return;
@@ -93,10 +97,9 @@ Subscribe to the `DashboardPanelRender` delegate to actually render your panel.
 		$context['panel']->appendChild(new XMLElement('div', 'The value of Option 1 is: ' . $config['option-1']));
 	}
 
-First check that you should output your own panel. `$context['panel']` contains an `XMLElement` that is a panel container to which you can append children. The saved configuration for the panel is presented in the `$context['config']` array.
+First check that you should output your own panel. `$context['panel']` contains an `XMLElement` that is an empty panel container to which you can append children. The saved configuration for the panel is presented in the `$context['config']` array.
 
 * * *
 
 ## Known issues
-* when selecting an item from the Create New menu, the menu does not disappear until it loses focus
-* adding more than one Markdown Text Panel produces a PHP error
+* adding Markdown panels using different versions of the Markdown formatter will cause an error. Be sure to always use the same Markdown formatter for all panels

@@ -15,8 +15,8 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 		$this->setTitle(__('Symphony') . ' &ndash; ' . __('Dashboard'));
 		
 		$this->addScriptToHead(URL . '/extensions/dashboard/assets/jquery-ui-1.8.2.custom.min.js', 29421);
-		$this->addStylesheetToHead(URL . '/extensions/dashboard/assets/dashboard.css', 'screen', 29422);
-		$this->addScriptToHead(URL . '/extensions/dashboard/assets/dashboard.js', 29423);
+		$this->addStylesheetToHead(URL . '/extensions/dashboard/assets/dashboard.index.css', 'screen', 29422);
+		$this->addScriptToHead(URL . '/extensions/dashboard/assets/dashboard.index.js', 29423);
 		
 		// Add welcome message
 		$hour = date('H');

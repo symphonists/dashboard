@@ -39,6 +39,11 @@ Class Extension_Dashboard extends Extension{
 			),
 			array(
 				'page'		=> '/backend/',
+				'delegate'	=> 'InitaliseAdminPageHead',
+				'callback'	=> 'append_assets'
+			),
+			array(
+				'page'		=> '/backend/',
 				'delegate'	=> 'AdminPagePreGenerate',
 				'callback'	=> 'page_pre_generate'
 			),
@@ -57,6 +62,11 @@ Class Extension_Dashboard extends Extension{
 				'delegate'	=> 'DashboardPanelTypes',
 				'callback'	=> 'dashboard_panel_types'
 			),
+			array(
+				'page'		=> '/system/authors/',
+				'delegate'	=> 'AddDefaultAuthorAreas',
+				'callback'	=> 'author_default_section'
+			)
 		);
 	}
 	
@@ -75,9 +85,18 @@ Class Extension_Dashboard extends Extension{
 		);
 	}
 	
-	public function page_pre_generate($context) {
-		// when arriving after logging-in, redirect to Dashboard
-		//if (preg_match('/\/symphony\/$/', $_SERVER['HTTP_REFERER'])) redirect('http://' . DOMAIN . '/symphony/extension/dashboard/index/');
+	public function append_assets($context) {
+		$page = $context['parent']->Page;
+		$page->addStylesheetToHead(URL . '/extensions/dashboard/assets/dashboard.backend.css', 'screen', 666);
+		$page->addScriptToHead(URL . '/extensions/dashboard/assets/dashboard.backend.js', 667);
+	}
+	
+	public function author_default_section($context) {
+		$context['options'][] = array(
+			'/extension/dashboard/', //value
+			($context['default_area'] == '/extension/dashboard/'), //selected
+			__('Dashboard') // label
+		);
 	}
 	
 	public static function getPanels() {

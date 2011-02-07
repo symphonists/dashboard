@@ -1,4 +1,3 @@
-
 /* DASHBOARD */
 
 html {
@@ -28,14 +27,13 @@ h2 select {
 }
 
 #save-panel {
-	background: #fbfbfb;
+	background: #fafafa;
 	z-index: 90;
 	position: relative;
 	margin: 0 -19px;
 	padding: 0 19px;
 	display: none;
 	overflow: hidden;
-	
 	-moz-box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.05);
 	-webkit-box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.1);
 	border-bottom: 1px solid #ddd;
@@ -99,30 +97,34 @@ h2 select {
 	padding: 5px 10px;
 	border: 1px solid #fff;
 	min-height: 200px;
-	
 	-moz-border-radius: 7px;
 	-webkit-border-radius: 7px;
 	border-radius: 7px;
 }
 
 #dashboard .sortable-container.hover {
-	border: 1px solid #eee;
 	background: #fafafa;
 }
 
 #dashboard .sortable-container.active {
-	border: 1px solid #ccc !important;
+
 }
 
 .panel {
 	background: #FBFBFB;
-	border: 1px solid #bbb;
+	border: 1px solid #ddd;
 	margin: 10px 0;
 	position: relative;
 	
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
+}
+
+.panel.ui-sortable-helper {
+	-moz-box-shadow: 1px 2px 6px #ddd;
+	-webkit-box-shadow: 1px 2px 6px #ddd;
+	border-color: #ccc;
 }
 
 .panel-inner {
@@ -149,6 +151,8 @@ h2 select {
 	-moz-border-radius: 7px;
 	-webkit-border-radius: 7px;
 	border-radius: 7px;
+	
+	border: 1px dashed #bbb;
 }
 
 .panel h3 {
@@ -160,7 +164,7 @@ h2 select {
 	color: #555;
 	
 	border-top: 1px solid #fff;
-	border-bottom: 1px solid #bbb;
+	border-bottom: 1px solid #bfbfbf;
 	
 	-moz-border-radius: 4px;	
 	-moz-border-radius-bottomleft: 0;

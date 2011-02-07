@@ -68,15 +68,19 @@ Class contentExtensionDashboardPanel_Config extends AjaxPage {
 			$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
 			$legend = new XMLElement('legend', __('General'));
 			$fieldset->appendChild($legend);
-			$fieldset->appendChild(Widget::Label(__('Name'),
+			
+			$group = new XMLElement('div', NULL, array('class' => 'group'));
+			
+			$group->appendChild(Widget::Label(__('Name'),
 				Widget::Input('panel[label]', $panel_config['label'])
 			));
-			$fieldset->appendChild(Widget::Label(__('Placement'), 
+			$group->appendChild(Widget::Label(__('Placement'), 
 				Widget::Select('panel[placement]', array(
 					array('primary', ($panel_config['placement'] == 'primary'), __('Main content')),
 					array('secondary', ($panel_config['placement'] == 'secondary'), __('Sidebar'))
 				))
 			));
+			$fieldset->appendChild($group);
 			$primary->appendChild($fieldset);
 
 			if ($config_options) $primary->appendChild($config_options);
