@@ -112,7 +112,7 @@ h2 select {
 
 .panel {
 	background: #FBFBFB;
-	border: 1px solid #ddd;
+	border: 1px solid #ccc;
 	margin: 10px 0;
 	position: relative;
 	
@@ -221,11 +221,11 @@ div.create {
 	background-color: #81b934;
 	color: #fff;
 	float: right;
-	padding: 0 1em .1em 1em;
+	display: inline-block;
+	padding: 0.5em 1em .5em 1em;
 	margin: 0;
-	line-height: 2em;
-	height: 2em;
-	font-size: .7em;
+	line-height: 11px;
+	font-size: 10px;
 	text-decoration: none;
 	text-shadow: none;
 	cursor: pointer;
@@ -248,8 +248,8 @@ div.create {
 
 .select-button:hover,
 .select-button.active {
-	padding-bottom: 3px;
-	margin-bottom: -3px;
+	padding-bottom: 7px;
+	margin-bottom: -7px;
 }
 
 .select-button:hover ul {
@@ -264,6 +264,7 @@ div.create {
 	z-index: 99;
 	margin: 0;
 	display: none;
+	line-height: 16px;
 }
 
 .select-button ul li {
