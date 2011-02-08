@@ -1,6 +1,6 @@
 # Dashboard
  
-* Version: 1.3
+* Version: 1.3.1
 * Author: Nick Dunn
 * Build Date: 2011-02-07
 * Requirements: Symphony 2.2
