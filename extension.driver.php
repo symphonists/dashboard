@@ -251,7 +251,7 @@ Class Extension_Dashboard extends Extension{
 							'label' => __('List view'),
 							'options' => array(
 								array('list-all', ($config['show'] == 'list-all'), __('All items')),
-								array('list-3', ($config['show'] == 'list-3'), '3 ' . _('items')),
+								array('list-3', ($config['show'] == 'list-3'), '3 ' . __('items')),
 								array('list-5', ($config['show'] == 'list-5'), '5 ' . __('items')),
 								array('list-10', ($config['show'] == 'list-10'), '10 ' . __('items'))
 							)
@@ -270,7 +270,7 @@ Class Extension_Dashboard extends Extension{
 			case 'html_block':
 			
 				$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
-				$fieldset->appendChild(new XMLElement('legend', __('RSS Reader')));
+				$fieldset->appendChild(new XMLElement('legend', __('HTML Block')));
 				
 				$label = Widget::Label(__('Page URL'), Widget::Input('config[url]', $config['url']));
 				$fieldset->appendChild($label);
