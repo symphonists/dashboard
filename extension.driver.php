@@ -170,6 +170,16 @@ Class Extension_Dashboard extends Extension{
 		
 		$panel_inner = new XMLElement('div', NULL, array('class' => 'panel-inner'));
 		
+		/**
+		* Ask panel extensions to render their panel HTML.
+		*
+		* @delegate DashboardPanelRender
+		* @param string $context
+		* '/backend/'
+		* @param string $type
+		* @param array $config
+		* @param XMLElement $panel
+		*/
 		Administration::instance()->ExtensionManager->notifyMembers('DashboardPanelRender', '/backend/', array(
 			'type'		=> $p['type'],
 			'config'	=> unserialize($p['config']),
@@ -185,8 +195,18 @@ Class Extension_Dashboard extends Extension{
 	public static function buildPanelOptions($type, $panel_id) {
 		
 		$panel_config = self::getPanel($panel_id);
-		
 		$form = null;
+
+		/**
+		* Ask panel extensions to render their options HTML.
+		*
+		* @delegate DashboardPanelOptions
+		* @param string $context
+		* '/backend/'
+		* @param string $type
+		* @param array $config
+		* @param XMLElement $panel
+		*/
 		Administration::instance()->ExtensionManager->notifyMembers('DashboardPanelOptions', '/backend/', array(
 			'type'				=> $type,
 			'form'				=> &$form,

@@ -36,6 +36,15 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 		));
 	
 		$panel_types = array();
+
+		/**
+		* Ask panel extensions to list their panel types.
+		*
+		* @delegate DashboardPanelTypes
+		* @param string $context
+		* '/backend/'
+		* @param array $types
+		*/
 		Administration::instance()->ExtensionManager->notifyMembers('DashboardPanelTypes', '/backend/', array(
 			'types' => &$panel_types
 		));
