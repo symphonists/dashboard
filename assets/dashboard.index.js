@@ -204,7 +204,21 @@ var Dashboard = {
 			url: Symphony.Context.get('root') + '/symphony/extension/dashboard/panel_config/',
 			data: post_data,
 			success: function(data) {
-				
+				// Must be an error, show the form again:
+				if (jQuery('response', data).length == 0) {
+					if (jQuery('#save-panel').length) {
+						self.hideEditForm(function() {
+							self.revealEditForm(data);
+						}, false);
+					}
+
+					else {
+						self.revealEditForm(data);
+					}
+
+					return;
+				}
+
 				var id = jQuery('response', data).attr('id');
 				var placement = jQuery('response', data).attr('placement');
 				
@@ -223,7 +237,7 @@ var Dashboard = {
 					
 					case 'submit':
 						// insert new panel
-						if (id == '') {
+						if (panel.length == 0) {
 							self.hideEditForm(function() {
 								jQuery('.' + placement).append(html);
 								jQuery('.new-panel').slideDown('fast', function() {
