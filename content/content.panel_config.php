@@ -79,6 +79,8 @@ class contentExtensionDashboardPanel_Config extends AjaxPage {
 
 		if (isset($this->panelId) && !empty($this->panelId)) {
 			$this->panelConfig = Extension_Dashboard::getPanel($this->panelId);
+			$this->panelLabel = $this->panelConfig['label'];
+			$this->panelPlacement = $this->panelConfig['placement'];
 		}
 
 		if (isset($_POST['action']['submit']) && empty($this->panelErrors)) {
