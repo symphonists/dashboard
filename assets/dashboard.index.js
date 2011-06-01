@@ -223,7 +223,7 @@ var Dashboard = {
 					
 					case 'submit':
 						// insert new panel
-						if (id == '') {
+						if (panel.length == 0) {
 							self.hideEditForm(function() {
 								jQuery('.' + placement).append(html);
 								jQuery('.new-panel').slideDown('fast', function() {

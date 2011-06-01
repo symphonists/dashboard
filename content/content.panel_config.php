@@ -139,10 +139,7 @@ class contentExtensionDashboardPanel_Config extends AjaxPage {
 
 			$container->appendChild($primary);
 
-			$form = new XMLElement('form');
-			$form->setAttribute('method', 'POST');
-			$form->appendChild($container);
-			$this->_Result = $form;
+			$this->_Result = $container;
 		}
 	}
 }
