@@ -376,3 +376,31 @@ select.hide {
 	float: left;
 	width: 70%;
 }
+
+/* GENERIC: Skinny Table */
+
+table.skinny {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+table.skinny td {
+	vertical-align: top;
+	padding: 5px;
+	background: #f1f1f1;
+}
+
+table.skinny td.text {
+	white-space: nowrap;
+}
+
+table.skinny th {
+	text-align: left;
+	text-transform: capitalize;
+	border-bottom: 1px solid #ccc;
+	padding: 5px;
+}
+
+table.skinny .alt td {
+	background: transparent;
+}
