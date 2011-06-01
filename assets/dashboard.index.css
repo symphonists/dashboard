@@ -349,6 +349,7 @@ select.hide {
 
 .rss_reader ul {
 	margin: 0 0 0 15px;
+	list-style-type: disc;
 }
 
 .rss_reader ul span.date {
