@@ -299,8 +299,9 @@ select.hide {
 	left: -9999em;
 }
 
-/* PANEL: Datasource to Table */
-
+/* PANEL: Datasource to Table
+   @DEPRECATED if you want a skinny table, use .skinny
+*/
 .datasource_to_table table {
 	border-collapse: collapse;
 	width: 100%;
@@ -387,7 +388,6 @@ table.skinny {
 table.skinny td {
 	vertical-align: top;
 	padding: 5px;
-	background: #f1f1f1;
 }
 
 table.skinny td.text {
@@ -398,7 +398,8 @@ table.skinny th {
 	text-align: left;
 	text-transform: capitalize;
 	border-bottom: 1px solid #ccc;
-	padding: 5px;
+	padding: 2px 5px 8px 5px;
+	line-height: 1;
 }
 
 table.skinny .alt td {

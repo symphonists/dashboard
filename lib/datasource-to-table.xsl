@@ -5,7 +5,7 @@
 <xsl:variable name="columns" select="//entry[1]/*"/>
 
 <xsl:template match="/">
-	<table>
+	<table class="skinny">
 		<thead>
 			<tr>
 				<xsl:apply-templates select="$columns" mode="th"/>
