@@ -124,23 +124,7 @@ Class Extension_Dashboard extends Extension{
 		return Symphony::Database()->query($sql);
 	}
 	
-	public static function savePanel($config) {
-		// Grab internal config values:
-		$panel = array(
-			'id'		=> $config['id'],
-			'label'		=> $config['label'],
-			'placement'	=> $config['placement'],
-			'type'		=> $config['type']
-		);
-
-		// Remove internal config from custom config:
-		unset(
-			$config['id'],
-			$config['label'],
-			$config['placement'],
-			$config['type']
-		);
-
+	public static function savePanel($panel, $config) {
 		if (!isset($panel['id']) || empty($panel['id'])) {
 			$max_sort_order = (int)reset(Symphony::Database()->fetchCol('max_sort_order', 'SELECT MAX(sort_order) AS `max_sort_order` FROM tbl_dashboard_panels'));
 			

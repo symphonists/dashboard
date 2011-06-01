@@ -6,6 +6,8 @@ require_once(EXTENSIONS . '/dashboard/extension.driver.php');
 class contentExtensionDashboardPanel_Config extends AjaxPage {
 	protected $panelErrors = array();
 	protected $panelConfig = array();
+	protected $panelLabel = null;
+	protected $panelPlacement = null;
 	protected $panelType = null;
 	protected $response = null;
 	
@@ -26,11 +28,21 @@ class contentExtensionDashboardPanel_Config extends AjaxPage {
 				? $_REQUEST['config']
 				: null
 		);
+		$this->panelLabel = (
+			isset($_REQUEST['label'])
+				? $_REQUEST['label']
+				: null
+		);
+		$this->panelPlacement = (
+			isset($_REQUEST['placement'])
+				? $_REQUEST['placement']
+				: null
+		);
 		$this->panelType = (
 			isset($_REQUEST['type'])
 				? $_REQUEST['type']
 				: null
-			);
+		);
 	}
 
 	public function view() {
@@ -40,24 +52,32 @@ class contentExtensionDashboardPanel_Config extends AjaxPage {
 			);
 
 			if (empty($this->panelErrors)) {
-				$this->panelId = Extension_Dashboard::savePanel($this->panelConfig);
+				$this->panelId = Extension_Dashboard::savePanel(
+					array(
+						'id'		=> $this->panelId,
+						'label'		=> $this->panelLabel,
+						'placement'	=> $this->panelPlacement,
+						'type'		=> $this->panelType
+					),
+					$this->panelConfig
+				);
 			}
 		}
 
 		else if (isset($_POST['action']['delete'])) {
-			Extension_Dashboard::deletePanel($this->panelConfig['id']);
+			Extension_Dashboard::deletePanel($this->panelId);
 
 			$this->_Result->setAttribute(
-				'id', $this->panelConfig['id']
+				'id', $this->panelId
 			);
 			$this->_Result->setAttribute(
-				'placement', $this->panelConfig['placement']
+				'placement', $this->panelPlacement
 			);
 
 			return;
 		}
 
-		if (isset($this->panelId)) {
+		if (isset($this->panelId) && !empty($this->panelId)) {
 			$this->panelConfig = Extension_Dashboard::getPanel($this->panelId);
 		}
 
@@ -67,10 +87,10 @@ class contentExtensionDashboardPanel_Config extends AjaxPage {
 			$html->setAttribute('class', $class . ' new-panel');
 
 			$this->_Result->setAttribute(
-				'id', $this->panelConfig['id']
+				'id', $this->panelId
 			);
 			$this->_Result->setAttribute(
-				'placement', $this->panelConfig['placement']
+				'placement', $this->panelPlacement
 			);
 			$this->_Result->setValue(
 				sprintf('<![CDATA[%s]]>', $html->generate())
@@ -100,18 +120,18 @@ class contentExtensionDashboardPanel_Config extends AjaxPage {
 			$group = new XMLElement('div', NULL, array('class' => 'group'));
 			
 			$group->appendChild(Widget::Label(__('Name'),
-				Widget::Input('config[label]', $this->panelConfig['label'])
+				Widget::Input('label', $this->panelLabel)
 			));
 			$group->appendChild(Widget::Label(__('Placement'), 
-				Widget::Select('config[placement]', array(
+				Widget::Select('placement', array(
 					array(
 						'primary',
-						($this->panelConfig['placement'] == 'primary'),
+						($this->panelPlacement == 'primary'),
 						__('Main content')
 					),
 					array(
 						'secondary',
-						($this->panelConfig['placement'] == 'secondary'),
+						($this->panelPlacement == 'secondary'),
 						__('Sidebar')
 					)
 				))
@@ -134,8 +154,8 @@ class contentExtensionDashboardPanel_Config extends AjaxPage {
 
 			$primary->appendChild($actions);
 
-			$primary->appendChild(Widget::Input('config[id]', $this->panelId, 'hidden'));
-			$primary->appendChild(Widget::Input('config[type]', $this->panelType, 'hidden'));
+			$primary->appendChild(Widget::Input('id', $this->panelId, 'hidden'));
+			$primary->appendChild(Widget::Input('type', $this->panelType, 'hidden'));
 
 			$container->appendChild($primary);
 
