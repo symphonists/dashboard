@@ -124,9 +124,24 @@ Class Extension_Dashboard extends Extension{
 		return Symphony::Database()->query($sql);
 	}
 	
-	public static function savePanel($panel=NULL, $config=NULL) {
-		if ($panel['id'] == '') {
-			
+	public static function savePanel($config) {
+		// Grab internal config values:
+		$panel = array(
+			'id'		=> $config['id'],
+			'label'		=> $config['label'],
+			'placement'	=> $config['placement'],
+			'type'		=> $config['type']
+		);
+
+		// Remove internal config from custom config:
+		unset(
+			$config['id'],
+			$config['label'],
+			$config['placement'],
+			$config['type']
+		);
+
+		if (!isset($panel['id']) || empty($panel['id'])) {
 			$max_sort_order = (int)reset(Symphony::Database()->fetchCol('max_sort_order', 'SELECT MAX(sort_order) AS `max_sort_order` FROM tbl_dashboard_panels'));
 			
 			Symphony::Database()->query(sprintf(
@@ -141,9 +156,9 @@ Class Extension_Dashboard extends Extension{
 			));
 			
 			return Symphony::Database()->getInsertID();
-			
-		} else {
-			
+		}
+
+		else {
 			Symphony::Database()->query(sprintf(
 				"UPDATE tbl_dashboard_panels SET
 				label = '%s',
@@ -192,7 +207,7 @@ Class Extension_Dashboard extends Extension{
 		return $panel;
 	}
 	
-	public static function buildPanelOptions($type, $panel_id) {
+	public static function buildPanelOptions($type, $panel_id, $errors) {
 		
 		$panel_config = self::getPanel($panel_id);
 		$form = null;
@@ -204,16 +219,43 @@ Class Extension_Dashboard extends Extension{
 		* @param string $context
 		* '/backend/'
 		* @param string $type
-		* @param array $config
-		* @param XMLElement $panel
+		* @param XMLElement $form
+		* @param array $existing_config
+		* @param array $errors
 		*/
 		Administration::instance()->ExtensionManager->notifyMembers('DashboardPanelOptions', '/backend/', array(
 			'type'				=> $type,
 			'form'				=> &$form,
-			'existing_config'	=> unserialize($panel_config['config'])
+			'existing_config'	=> unserialize($panel_config['config']),
+			'errors'			=> $errors
 		));
 
 		return $form;
+		
+	}
+	
+	public static function validatePanelOptions($type, $panel_id) {
+		
+		$panel_config = self::getPanel($panel_id);
+		$errors = array();
+
+		/**
+		* Ask panel extensions to validate their options.
+		*
+		* @delegate DashboardPanelValidate
+		* @param string $context
+		* '/backend/'
+		* @param string $type
+		* @param array $errors
+		* @param array $existing_config
+		*/
+		Administration::instance()->ExtensionManager->notifyMembers('DashboardPanelValidate', '/backend/', array(
+			'type'				=> $type,
+			'errors'			=> &$errors,
+			'existing_config'	=> unserialize($panel_config['config'])
+		));
+
+		return $errors;
 		
 	}
 	
