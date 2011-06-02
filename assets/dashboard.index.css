@@ -379,6 +379,22 @@ select.hide {
 	width: 70%;
 }
 
+/* PANEL: Symphony Overview */
+
+.panel.markdown_text p,
+.panel.markdown_text ul,
+.panel.markdown_text ol {
+	margin-bottom: 0.75em;
+}
+
+.panel.markdown_text ul {
+	list-style-type: disc;
+}
+
+.panel.markdown_text ol {
+	list-style-type: decimal;
+}
+
 /* GENERIC: Skinny Table */
 
 table.skinny {
