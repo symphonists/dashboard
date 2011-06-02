@@ -469,8 +469,30 @@ Class Extension_Dashboard extends Extension{
 				$dl = new XMLElement('dl');
 				$dl->appendChild(new XMLElement('dt', __('Website Name')));
 				$dl->appendChild(new XMLElement('dd', Symphony::Configuration()->get('sitename', 'general')));
+				
+				$repo_tags = json_decode(file_get_contents('https://github.com/api/v2/json/repos/show/symphonycms/symphony-2/tags'));
+				$tags = array();
+				
+				foreach($repo_tags->tags as $tag => $ref) {
+					// remove tags that contain strings
+					if(preg_match('/[a-zA]/i', $tag)) continue;
+					$tags[] = $tag;
+				}
+				
+				natsort($tags);
+				rsort($tags);
+
+				$latest_version = reset($tags);
+				$current_version = Symphony::Configuration()->get('version', 'symphony');
+
+				$needs_update = version_compare($latest_version, $current_version, '>');
+				
 				$dl->appendChild(new XMLElement('dt', __('Version')));
-				$dl->appendChild(new XMLElement('dd', Symphony::Configuration()->get('version', 'symphony')));
+				$dl->appendChild(new XMLElement(
+					'dd',
+					$current_version . (($needs_update) ? ' (<a href="http://symphony-cms.com/download/releases/version/'.$latest_version.'/">' . __('Latest is %s', array($latest_version)) . "</a>)" : '')
+				));
+				
 				$container->appendChild(new XMLElement('h4', __('Configuration')));
 				$container->appendChild($dl);
 				
@@ -488,7 +510,6 @@ Class Extension_Dashboard extends Extension{
 				if ($sections) $sections_count = count($sections);
 				
 				$entries = Administration::instance()->Database()->fetchRow(0, "SELECT count(id) AS `count` FROM tbl_entries");
-				
 				$pages = Administration::instance()->Database()->fetchRow(0, "SELECT count(id) AS `count` FROM tbl_pages");
 				
 				$dl = new XMLElement('dl');
