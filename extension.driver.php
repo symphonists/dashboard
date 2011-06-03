@@ -470,20 +470,36 @@ Class Extension_Dashboard extends Extension{
 				$dl->appendChild(new XMLElement('dt', __('Website Name')));
 				$dl->appendChild(new XMLElement('dd', Symphony::Configuration()->get('sitename', 'general')));
 				
-				$repo_tags = json_decode(file_get_contents('https://github.com/api/v2/json/repos/show/symphonycms/symphony-2/tags'));
-				$tags = array();
-				
-				foreach($repo_tags->tags as $tag => $ref) {
-					// remove tags that contain strings
-					if(preg_match('/[a-zA]/i', $tag)) continue;
-					$tags[] = $tag;
-				}
-				
-				natsort($tags);
-				rsort($tags);
-
-				$latest_version = reset($tags);
 				$current_version = Symphony::Configuration()->get('version', 'symphony');
+				
+				require_once(TOOLKIT . '/class.gateway.php');
+				$ch = new Gateway;
+				$ch->init();
+				$ch->setopt('URL', 'https://github.com/api/v2/json/repos/show/symphonycms/symphony-2/tags');
+				$ch->setopt('TIMEOUT', $timeout);
+				$repo_tags = $ch->exec();
+				
+				// tags request found
+				if($repo_tags) {
+					$repo_tags = json_decode(file_get_contents('https://github.com/api/v2/json/repos/show/symphonycms/symphony-2/tags'));
+					$tags = array();
+
+					foreach($repo_tags->tags as $tag => $ref) {
+						// remove tags that contain strings
+						if(preg_match('/[a-zA]/i', $tag)) continue;
+						$tags[] = $tag;
+					}
+
+					natsort($tags);
+					rsort($tags);
+					
+					$latest_version = reset($tags);
+					
+				}
+				// request for tags failed, assume current version is latest
+				else {
+					$latest_version = $current_version;
+				}
 
 				$needs_update = version_compare($latest_version, $current_version, '>');
 				
