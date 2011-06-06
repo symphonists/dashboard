@@ -417,6 +417,8 @@ Class Extension_Dashboard extends Extension{
 					$xml = $data['data'];
 				}
 				
+				if(!$xml) $xml = '<error>' . __('Error: could not retrieve panel XML feed.') . '</error>';
+				
 				require_once(TOOLKIT . '/class.xsltprocess.php');
 				$proc = new XsltProcess();
 				$data = $proc->process(
@@ -457,6 +459,8 @@ Class Extension_Dashboard extends Extension{
 				} else {
 					$html = $data['data'];
 				}
+				
+				if(!$html) $html = '<p class="invalid">' . __('Error: could not retrieve panel HTML.') . '</p>';
 				
 				$context['panel']->appendChild(new XMLElement('div', $html));
 			

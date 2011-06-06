@@ -6,6 +6,9 @@
 <xsl:template match="/">
 	
 	<xsl:choose>
+		<xsl:when test="error">
+			<p class="invalid"><xsl:value-of select="error"/></p>
+		</xsl:when>
 		<xsl:when test="$show='full-all'">
 			<xsl:apply-templates select="//item" mode="full"/>
 		</xsl:when>
@@ -22,9 +25,6 @@
 				<xsl:apply-templates select="//item[position() &lt;= substring-after($show,'-')]" mode="list"/>
 			</ul>
 		</xsl:when>
-		<xsl:otherwise>
-			
-		</xsl:otherwise>
 	</xsl:choose>
 	
 </xsl:template>

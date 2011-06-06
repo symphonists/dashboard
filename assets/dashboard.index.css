@@ -187,6 +187,10 @@ h2 select {
 	display: none;
 }
 
+.panel p.invalid {
+	color: #999;
+}
+
 #dashboard.edit .panel h3 {
 	cursor: move;
 }
