@@ -23,14 +23,24 @@ Once installed "Dashboard" will appear in the "Default area" dropdown when you c
 There are five core panel types:
 
 * **Datasource to Table** takes a Symphony Data Source and attempts to render it as an HTML table. This works best with basic fields such as Text Input, Checkboxes and Dates. The first column will link to the entry itself.
-* **HTML Block** allows you to specify the URL of a page that outputs a chunk of HTML (a `<div />` perhaps) to include in the panel
-* **Markdown Text Block** allows you to add Markdown-formatted text to include in the panel
+* **HTML Block** allows you to specify the URL of a page that outputs a chunk of HTML (a `<div />` perhaps) to include in the panel.
+* **Markdown Text Block** allows you to add Markdown-formatted text to include in the panel.
 * **RSS Feed Reader** parses an RSS feed and renders the summary. Useful for latest news or updates.
 * **Symphony Overview** renders basic statistics about your installation such as version number and total number of entries.
 
+## Extensions that provide panels
+
+The delegates that Dashboard provides means that other extensions can supply their own dashboard panels. These include:
+
+* [Tracker](#) panel shows summary of all author and developer activity within Symphony
+* [Search Index](#) panel shows a list of recent searches
+* [Sections Panel](#) shows latest entries from a section (without creating a data source)
+* [Health Check](#) ...
+* [Google Analytics](#) ...
+
 ## Creating your own panel types
 
-To provide panels your extension needs to implement (subscribe to) three delegates:
+To provide panels your extension needs to implement (subscribe to) two delegates:
 
 	public function getSubscribedDelegates() {
 		return array(
@@ -41,16 +51,26 @@ To provide panels your extension needs to implement (subscribe to) three delegat
 			),
 			array(
 				'page'		=> '/backend/',
-				'delegate'	=> 'DashboardPanelOptions',
-				'callback'	=> 'dashboard_panel_options'
-			),
-			array(
-				'page'		=> '/backend/',
 				'delegate'	=> 'DashboardPanelTypes',
 				'callback'	=> 'dashboard_panel_types'
 			),
 		);
 	}
+
+There are two additional delegates to provide UI for panel settings, and its validation:
+
+	array(
+		'page'		=> '/backend/',
+		'delegate'	=> 'DashboardPanelOptions',
+		'callback'	=> 'dashboard_panel_options'
+	),
+	array(
+		'page'		=> '/backend/',
+		'delegate'	=> 'DashboardPanelValidate',
+		'callback'	=> 'dashboard_panel_validate'
+	),
+
+These are optional unless your panel configuration requires user input.
 
 ### DashboardPanelTypes
 
