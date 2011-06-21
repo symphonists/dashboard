@@ -485,7 +485,7 @@ Class Extension_Dashboard extends Extension{
 				
 				// tags request found
 				if($repo_tags) {
-					$repo_tags = json_decode(file_get_contents('https://github.com/api/v2/json/repos/show/symphonycms/symphony-2/tags'));
+					$repo_tags = json_decode($repo_tags);
 					$tags = array();
 
 					foreach($repo_tags->tags as $tag => $ref) {
