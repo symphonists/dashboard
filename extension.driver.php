@@ -339,7 +339,7 @@ Class Extension_Dashboard extends Extension{
 				foreach($tfm->listAll() as $tf) $formatters[] = array($tf['handle'], ($config['formatter'] == $tf['handle']), $tf['name']);
 
 				$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
-				$fieldset->appendChild(new XMLElement('legend', __('Data Source to Table')));
+				$fieldset->appendChild(new XMLElement('legend', __('Markdown Text')));
 				
 				$label = Widget::Label(__('Text Formatter'), Widget::Select('config[formatter]', $formatters));
 				$fieldset->appendChild($label);
