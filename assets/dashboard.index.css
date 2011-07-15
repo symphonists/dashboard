@@ -363,24 +363,42 @@ select.hide {
 
 /* PANEL: Symphony Overview */
 
-.symphony_overview h4 {
+#dashboard .panel {
 	margin: 0 0 5px 0;
 }
 
-.symphony_overview dl {
+#dashboard .panel dl {
 	margin: 0 0 10px 0;
 	overflow: hidden;
 }
 
-.symphony_overview dt {
+#dashboard .panel dt {
 	float: left;
 	clear: left;
 	width: 25%;
+	margin-right: 5%;
 }
 
-.symphony_overview dd {
+#dashboard .panel dd {
 	float: left;
 	width: 70%;
+}
+
+#dashboard .secondary .panel dt {
+	width: 45%;
+}
+
+#dashboard .secondary .panel dd {
+	width: 50%;
+}
+
+
+#dashboard .panel ul {
+	list-style-type: disc;
+}
+
+#dashboard .panel ol {
+	list-style-type: decimal;
 }
 
 /* PANEL: Symphony Overview */
@@ -389,14 +407,6 @@ select.hide {
 .panel.markdown_text ul,
 .panel.markdown_text ol {
 	margin-bottom: 0.75em;
-}
-
-.panel.markdown_text ul {
-	list-style-type: disc;
-}
-
-.panel.markdown_text ol {
-	list-style-type: decimal;
 }
 
 /* GENERIC: Skinny Table */
