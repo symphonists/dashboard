@@ -50,7 +50,7 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 		));
 		
 		$panel_types_options = array();
-		ksort($panel_types);
+		natsort($panel_types);
 		foreach($panel_types as $handle => $name) {
 			$panel_types_options[] = array($handle, false, $name);
 		}
