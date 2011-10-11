@@ -6,7 +6,7 @@
 
 	<description lang="en">Provide a Dashboard summary screen with configurable panels.</description>
 
-	<url type="repo">https://github.com/nickdunn/dashboard</repository>
+	<url type="repo">https://github.com/nickdunn/dashboard</url>
 	
 	<types>
 		<type>Interface</type>
