@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<extension id="dashboard">
+	
+	<name>Dashboard</name>
+
+	<description lang="en">Provide a Dashboard summary screen with configurable panels.</description>
+
+	<url type="repo">https://github.com/nickdunn/dashboard</repository>
+	
+	<types>
+		<type>Interface</type>
+	</types>
+	
+	<authors>
+		<author>
+			<name github="nickdunn" symphony="nickdunn" twitter="nickdunn">Nick Dunn</name>
+			<email>nick@nick-dunn.co.uk</email>
+			<website>http://nick-dunn.co.uk</website>
+		</author>
+	</authors>
+
+	<releases>
+		<release>
+			<version>1.5.1</version>
+			<date>2011-06-02</date>
+			<compatibility range="yes">
+				<symphony>2.2.0</symphony>
+				<symphony>2.3</symphony>
+			</compatibility>			
+		</release>
+	</releases>	
+	
+</extension>
