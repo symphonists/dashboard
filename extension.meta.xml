@@ -19,16 +19,15 @@
 			<website>http://nick-dunn.co.uk</website>
 		</author>
 	</authors>
-
-	<releases>
-		<release>
-			<version>1.5.1</version>
-			<date>2011-06-02</date>
-			<compatibility range="yes">
-				<symphony>2.2.0</symphony>
-				<symphony>2.3</symphony>
-			</compatibility>			
-		</release>
-	</releases>	
 	
+	<releases>
+		<release version="1.5.1" date="2011-06-01" min="2.2">
+			<![CDATA[
+				* Removed redundant styles and fixed various CSS bugs
+				* Removed deprecated JS & CSS accessors
+			]]>
+		</release>
+		<release version="1.4" date="2011-05-01" min="2.1.x" />
+	</releases>	
+		
 </extension>
