@@ -27,7 +27,7 @@
 				* Removed deprecated JS & CSS accessors
 			]]>
 		</release>
-		<release version="1.4" date="2011-05-01" min="2.1.x" />
+		<release version="1.4" date="2011-05-01" min="2.0" max="2.1.2" />
 	</releases>	
 		
 </extension>
