@@ -1,25 +1,21 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-
+<?xml version="1.0" encoding="UTF-8"?>
 <extension id="dashboard">
-	
 	<name>Dashboard</name>
-
-	<description lang="en">Provide a Dashboard summary screen with configurable panels.</description>
-
+	<description>Provide a Dashboard summary screen with configurable panels</description>
 	<url type="repo">https://github.com/nickdunn/dashboard</url>
-	
+	<url type="discuss">http://symphony-cms.com/discuss/thread/48297/</url>
 	<types>
 		<type>Interface</type>
 	</types>
-	
 	<authors>
 		<author>
-			<name github="nickdunn" symphony="nickdunn" twitter="nickdunn">Nick Dunn</name>
-			<email>nick@nick-dunn.co.uk</email>
+			<name github="nickdunn" symphony="nickdunn">Nick Dunn</name>
 			<website>http://nick-dunn.co.uk</website>
 		</author>
 	</authors>
-	
+	<media>
+		<item type="image" url="http://symphonyextensions.com/nickdunn/dashboard/media/dashboard.png">Example dashboard</item>
+	</media>
 	<releases>
 		<release version="1.5.1" date="2011-06-01" min="2.2">
 			<![CDATA[
@@ -27,7 +23,6 @@
 				* Removed deprecated JS & CSS accessors
 			]]>
 		</release>
-		<release version="1.4" date="2011-05-01" min="2.0" max="2.1.2" />
-	</releases>	
-		
+		<release version="1.4" date="2011-05-15" min="2.1.x" />
+	</releases>
 </extension>
