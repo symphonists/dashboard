@@ -2,7 +2,7 @@
 <extension id="dashboard">
 	<name>Dashboard</name>
 	<description>Provide a Dashboard summary screen with configurable panels</description>
-	<url type="repo">https://github.com/nickdunn/dashboard</url>
+	<repo type="github">https://github.com/nickdunn/dashboard</repo>
 	<url type="discuss">http://symphony-cms.com/discuss/thread/48297/</url>
 	<types>
 		<type>Interface</type>

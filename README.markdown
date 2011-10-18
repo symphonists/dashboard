@@ -1,9 +1,4 @@
 # Dashboard
- 
-* Version: 1.5.1
-* Author: Nick Dunn
-* Build Date: 2011-06-02
-* Requirements: Symphony 2.2
 
 ## Purpose
 To provide a Dashboard summary screen for users. Dashboard "panels" can contain any information. This extension provides the framework for building a Dashboard, and provides four basic panel types. Other extensions can provide their own panel types.
