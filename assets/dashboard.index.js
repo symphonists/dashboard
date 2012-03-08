@@ -10,7 +10,6 @@ Symphony.Language.add({
 /*-----------------------------------------------------------------------------
 Dashboard
 -----------------------------------------------------------------------------*/
-
 var Dashboard = {
 	
 	$dashboard: null,
@@ -18,6 +17,7 @@ var Dashboard = {
 	edit_mode: false,
 	
 	init: function() {
+		
 		var self = this;
 
 		this.$dashboard = jQuery('#dashboard');

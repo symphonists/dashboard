@@ -1,17 +1,6 @@
 <?php
 
 Class Extension_Dashboard extends Extension{
-	
-	public function about() {
-		return array('name' => 'Dashboard',
-					 'version' => '1.5.1',
-					 'release-date' => '2011-06-02',
-					 'author' => array('name' => 'Nick Dunn',
-									   'website' => 'http://nick-dunn.co.uk',
-									   'email' => ''),
-						'description'   => 'Provide a Dashboard summary screen with configurable panels.'
-			 		);
-	}
 
 	public function install() {
 		return Symphony::Database()->query("CREATE TABLE `tbl_dashboard_panels` (
@@ -32,11 +21,6 @@ Class Extension_Dashboard extends Extension{
 	
 	public function getSubscribedDelegates() {
 		return array(
-			array(
-				'page'		=> '/backend/',
-				'delegate'	=> 'ExtensionsAddToNavigation',
-				'callback'	=> 'add_navigation'
-			),
 			array(
 				'page'		=> '/backend/',
 				'delegate'	=> 'InitaliseAdminPageHead',
@@ -70,23 +54,24 @@ Class Extension_Dashboard extends Extension{
 		);
 	}
 	
-	
-	public function add_navigation($context) {
-		$context['navigation'][-1] = array(
-			'name'		=> __('Dashboard'),
-			'index'		=> '1',
-			'children'	=> array(
-				array(
-					'link'		=> '/extension/dashboard/',
-					'name'		=> __('Dashboard'),
-					'visible'	=> 'yes'
-				),
-			),
+	public function fetchNavigation() {
+		return array(
+			array(
+				'name'		=> __('Dashboard'),
+				'type'		=> 'content',
+				'children'	=> array(
+					array(
+						'link'		=> '/index/',
+						'name'		=> __('Dashboard'),
+						'visible'	=> 'yes'
+					),
+				)
+			)
 		);
 	}
 	
 	public function append_assets($context) {
-		$page = $context['parent']->Page;
+		$page = Administration::instance()->Page;
 		$page->addStylesheetToHead(URL . '/extensions/dashboard/assets/dashboard.backend.css', 'screen', 666);
 		$page->addScriptToHead(URL . '/extensions/dashboard/assets/dashboard.backend.js', 667);
 	}
