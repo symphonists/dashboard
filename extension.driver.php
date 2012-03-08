@@ -346,11 +346,10 @@ Class Extension_Dashboard extends Extension{
 		switch($context['type']) {
 			
 			case 'datasource_to_table':
-
+				
 				require_once(TOOLKIT . '/class.datasourcemanager.php');
-				$dsm = new DatasourceManager(Administration::instance());
 
-				$ds = @$dsm->create($config['datasource'], NULL, false);
+				$ds = DatasourceManager::create($config['datasource'], NULL, false);
 				if (!$ds) {
 					$context['panel']->appendChild(new XMLElement('div', __(
 						'The Data Source with the name <code>%s</code> could not be found.',
@@ -360,7 +359,10 @@ Class Extension_Dashboard extends Extension{
 				}
 				
 				$param_pool = array();
-				$xml = $ds->grab($param_pool)->generate();
+				$xml = $ds->grab($param_pool);
+				
+				if(!$xml) return;
+				$xml = $xml->generate();
 
 				require_once(TOOLKIT . '/class.xsltprocess.php');
 				$proc = new XsltProcess();
