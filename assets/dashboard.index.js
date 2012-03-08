@@ -13,7 +13,6 @@ Dashboard
 var Dashboard = {
 	
 	$dashboard: null,
-	$h2: null,
 	edit_mode: false,
 	
 	init: function() {
@@ -21,9 +20,8 @@ var Dashboard = {
 		var self = this;
 
 		this.$dashboard = jQuery('#dashboard');
-		this.$h2 = jQuery('h2:first');
 		
-		// Create New button
+		// Edit Mode button
 		jQuery('a.edit-mode').bind('click', function(e) {
 			e.preventDefault();		
 			self.edit_mode = !self.edit_mode;
@@ -44,28 +42,13 @@ var Dashboard = {
 		});
 		
 		// Create New button
-		jQuery('#select-panel-type li').live('click', function(e) {
-			e.preventDefault();		
-			self.showEditForm(jQuery(this).attr('class'));
+		jQuery('select[name="panel-type"]').live('change', function(e) {
+			e.preventDefault();
+			var type = jQuery(this).val();
+			if(type === '') return;
+			self.showEditForm(type);
 		});
 		
-		jQuery('a[id^="select-"]').each(function(e) {
-			var button = jQuery(this);
-			var id = button.attr('id').replace(/select-/,'');
-			var html = jQuery('<div class="create button select-button" id="select-'+id+'"><span>'+button.text()+' &darr;</span><ul/></div>');
-			
-			button.after(html).remove();
-			
-			var select = jQuery('select[name="'+id+'"]').addClass('hide');
-			
-			var button = jQuery('#select-' + id);
-			var ul = button.find('ul');
-			select.find('option').each(function(i, el) {
-				var option = jQuery(el);
-				ul.append('<li class="'+option.attr('value')+'">'+option.text()+'</li>');
-			});
-		});
-
 		// Edit panel button
 		jQuery('.panel a.panel-edit').live('click', function(e) {
 			e.preventDefault();		
@@ -77,7 +60,7 @@ var Dashboard = {
 		// Delete panel button
 		jQuery('#save-panel button[name="action[delete]"]').live('click', function(e) {
 			e.preventDefault();
-			self.savePanel(jQuery('form').serialize(), 'delete');
+			self.savePanel(jQuery('#context form').serialize(), 'delete');
 		});
 		
 		// Cancel form button
@@ -89,13 +72,13 @@ var Dashboard = {
 		// Save panel button
 		jQuery('#save-panel input[name="action[submit]"]').live('click', function(e) {
 			e.preventDefault();
-			self.savePanel(jQuery('form').serialize(), 'submit');
+			self.savePanel(jQuery('#context form').serialize(), 'submit');
 		});
 		
 		// Save panel button (form submit default)
 		jQuery('form').bind('submit', function(e) {
 			e.preventDefault();
-			self.savePanel(jQuery('form').serialize(), 'submit');
+			self.savePanel(jQuery('#context form').serialize(), 'submit');
 		});
 		
 		jQuery('.primary, .secondary').sortable({
@@ -190,7 +173,7 @@ var Dashboard = {
 		// fade down dashboard panels to give edit form more priority
 		this.$dashboard.fadeTo('fast', 0.25);
 		// append form to page (hidden with CSS)
-		this.$h2.after(html);
+		jQuery('#context').append(html);
 		jQuery('#save-panel').slideDown();
 	},
 	
@@ -198,6 +181,7 @@ var Dashboard = {
 		var self = this;
 		
 		post_data += '&action[' + action + ']=true';
+		console.log(post_data)
 		
 		jQuery.ajax({
 			type: 'POST',
@@ -211,11 +195,9 @@ var Dashboard = {
 							self.revealEditForm(data);
 						}, false);
 					}
-
 					else {
 						self.revealEditForm(data);
 					}
-
 					return;
 				}
 
@@ -238,6 +220,7 @@ var Dashboard = {
 					case 'submit':
 						// insert new panel
 						if (panel.length == 0) {
+							console.log(placement)
 							self.hideEditForm(function() {
 								jQuery('.' + placement).append(html);
 								jQuery('.new-panel').slideDown('fast', function() {

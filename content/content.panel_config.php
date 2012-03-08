@@ -102,7 +102,7 @@ class contentExtensionDashboardPanel_Config extends AjaxPage {
 		else {
 			$this->addHeaderToPage('Content-Type', 'text/html');
 
-			$container = new XMLElement('div');
+			$container = new XMLElement('form');
 			$container->setAttribute('id', 'save-panel');
 			$container->appendChild(new XMLElement('div', NULL, array('class' => 'top')));
 
@@ -144,8 +144,8 @@ class contentExtensionDashboardPanel_Config extends AjaxPage {
 			if ($config_options) $primary->appendChild($config_options);
 
 			$actions = new XMLElement('div', NULL, array('class' => 'actions'));
-			$actions->appendChild(Widget::Input('action[submit]', __('Save Panel'), 'submit'));
 			$actions->appendChild(Widget::Input('action[cancel]', __('Cancel'), 'submit'));
+			$actions->appendChild(Widget::Input('action[submit]', __('Save Panel'), 'submit', array('class' => 'button create')));
 
 			if ($this->panelId) {
 				$actions->appendChild(new XMLElement('button', __('Delete Panel'), array(

@@ -22,15 +22,7 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 			elseif($hour < 17) $welcome = __('Welcome back');
 			else $welcome = __('Good evening');
 		}
-		$heading = new XMLElement('h2', $welcome . ', ' . Administration::instance()->Author->get('first_name'));
-		
-		// Create new button
-		$create_new = new XMLElement('a', __('Create New'), array(
-			'class'	=> 'create button',
-			'href'	=> '#',
-			'id'	=> 'select-panel-type'
-		));
-	
+			
 		$panel_types = array();
 
 		/**
@@ -45,27 +37,29 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 			'types' => &$panel_types
 		));
 		
-		$panel_types_options = array();
+		$panel_types_options = array(
+			array('', FALSE, __('New panel type:'))
+		);
+		
 		natsort($panel_types);
 		foreach($panel_types as $handle => $name) {
 			$panel_types_options[] = array($handle, false, $name);
 		}
-	
-		$heading->appendChild($create_new);
-		$heading->appendChild(Widget::Select('panel-type', $panel_types_options));
+		
+		$actions = array();
+		$actions[] = Widget::Select('panel-type', $panel_types_options);
 		
 		if(Administration::instance()->Author->isDeveloper()) {
-			$heading->appendChild(
-				new XMLElement('a', __('Enable Editing'), array(
-					'class'	=> 'edit-mode button',
-					'href'	=> '#',
-					'title' => __('Disable Editing')
-				))
+			$actions[] = Widget::Anchor(
+				__('Enable Editing'),
+				'#',
+				__('Disable Editing'),
+				'edit-mode button'
 			);
 		}
-		
-		$this->Form->appendChild($heading);
-		
+
+		$this->appendSubheading($welcome . ', ' . Administration::instance()->Author->get('first_name'), $actions);
+				
 		$container = new XMLElement('div', NULL, array('id' => 'dashboard'));
 		
 		$primary = new XMLElement('div', NULL, array('class' => 'primary sortable-container'));
