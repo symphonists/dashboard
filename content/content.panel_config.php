@@ -11,8 +11,8 @@ class contentExtensionDashboardPanel_Config extends AjaxPage {
 	protected $panelType = null;
 	protected $response = null;
 	
-	public function __construct(&$parent) {
-		parent::__construct($parent);
+	public function __construct() {
+		parent::__construct();
 
 		// AjaxPage uses 'result' instead of 'response':
 		$this->_Result = new XMLElement('response');

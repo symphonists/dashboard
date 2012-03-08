@@ -5,10 +5,6 @@ require_once(EXTENSIONS . '/dashboard/extension.driver.php');
 
 Class contentExtensionDashboardIndex extends AdministrationPage {
 	
-	public function __construct(&$parent) {
-		parent::__construct($parent);
-	}
-	
 	public function __viewIndex() {
 		
 		$this->setPageType('form');
