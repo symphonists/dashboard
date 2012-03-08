@@ -41,7 +41,7 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 		* '/backend/'
 		* @param array $types
 		*/
-		Administration::instance()->ExtensionManager->notifyMembers('DashboardPanelTypes', '/backend/', array(
+		Symphony::ExtensionManager()->notifyMembers('DashboardPanelTypes', '/backend/', array(
 			'types' => &$panel_types
 		));
 		

@@ -164,7 +164,7 @@ Class Extension_Dashboard extends Extension{
 		* @param array $config
 		* @param XMLElement $panel
 		*/
-		Administration::instance()->ExtensionManager->notifyMembers('DashboardPanelRender', '/backend/', array(
+		Symphony::ExtensionManager()->notifyMembers('DashboardPanelRender', '/backend/', array(
 			'type'		=> $p['type'],
 			'config'	=> unserialize($p['config']),
 			'panel'		=> &$panel_inner
@@ -192,7 +192,7 @@ Class Extension_Dashboard extends Extension{
 		* @param array $existing_config
 		* @param array $errors
 		*/
-		Administration::instance()->ExtensionManager->notifyMembers('DashboardPanelOptions', '/backend/', array(
+		Symphony::ExtensionManager()->notifyMembers('DashboardPanelOptions', '/backend/', array(
 			'type'				=> $type,
 			'form'				=> &$form,
 			'existing_config'	=> unserialize($panel_config['config']),
@@ -218,7 +218,7 @@ Class Extension_Dashboard extends Extension{
 		* @param array $errors
 		* @param array $existing_config
 		*/
-		Administration::instance()->ExtensionManager->notifyMembers('DashboardPanelValidate', '/backend/', array(
+		Symphony::ExtensionManager()->notifyMembers('DashboardPanelValidate', '/backend/', array(
 			'type'				=> $type,
 			'errors'			=> &$errors,
 			'existing_config'	=> unserialize($panel_config['config'])
