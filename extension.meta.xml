@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<extension id="dashboard">
+<extension id="dashboard" status="released" xmlns="http://symphony-cms.com/schemas/extension/1.0">
 	<name>Dashboard</name>
 	<description>Provide a Dashboard summary screen with configurable panels</description>
 	<repo type="github">https://github.com/nickdunn/dashboard</repo>
