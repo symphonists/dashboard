@@ -291,7 +291,7 @@ Class Extension_Dashboard extends Extension{
 				));
 				$fieldset->appendChild($label);
 				
-				$label = Widget::Label(__('Cache (minutes)'), Widget::Input('config[cache]', (int)$config['cache']));
+				$label = Widget::Label(__('Cache (minutes)'), Widget::Input('config[cache]', (string)(int)$config['cache']));
 				$fieldset->appendChild($label);
 
 				$context['form'] = $fieldset;
@@ -306,7 +306,7 @@ Class Extension_Dashboard extends Extension{
 				$label = Widget::Label(__('Page URL'), Widget::Input('config[url]', $config['url']));
 				$fieldset->appendChild($label);
 								
-				$label = Widget::Label(__('Cache (minutes)'), Widget::Input('config[cache]', (int)$config['cache']));
+				$label = Widget::Label(__('Cache (minutes)'), Widget::Input('config[cache]', (string)(int)$config['cache']));
 				$fieldset->appendChild($label);
 
 				$context['form'] = $fieldset;
