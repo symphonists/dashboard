@@ -211,34 +211,7 @@ select.hide {
 	left: -9999em;
 }
 
-/* PANEL: Datasource to Table
-   @DEPRECATED if you want a skinny table, use .skinny
-*/
-.datasource_to_table table {
-	border-collapse: collapse;
-	width: 100%;
-}
 
-.datasource_to_table table td {
-	vertical-align: top;
-	padding: 5px;
-	background: #f1f1f1;
-}
-
-.datasource_to_table table td.text {
-	white-space: nowrap;
-}
-
-.datasource_to_table table th {
-	text-align: left;
-	text-transform: capitalize;
-	border-bottom: 1px solid #ccc;
-	padding: 5px;
-}
-
-.datasource_to_table table .alt td {
-	background: transparent;
-}
 
 /* PANEL: RSS Feed Reader */
 
@@ -314,10 +287,10 @@ select.hide {
 }
 
 /* GENERIC: Skinny Table */
-
 table.skinny {
 	border-collapse: collapse;
 	width: 100%;
+	margin-top: 0;
 }
 
 table.skinny td {
