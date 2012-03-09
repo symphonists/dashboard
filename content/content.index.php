@@ -38,7 +38,7 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 		));
 		
 		$panel_types_options = array(
-			array('', FALSE, __('New panel type:'))
+			array('', FALSE, __('New Panel'))
 		);
 		
 		natsort($panel_types);
@@ -59,11 +59,13 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 		}
 
 		$this->appendSubheading($welcome . ', ' . Administration::instance()->Author->get('first_name'), $actions);
-				
+		
+		$this->Form->setAttribute('class', 'two columns');
+		
 		$container = new XMLElement('div', NULL, array('id' => 'dashboard'));
 		
-		$primary = new XMLElement('div', NULL, array('class' => 'primary sortable-container'));
-		$secondary = new XMLElement('div', NULL, array('class' => 'secondary sortable-container'));
+		$primary = new XMLElement('div', NULL, array('class' => 'primary column sortable-container'));
+		$secondary = new XMLElement('div', NULL, array('class' => 'secondary column sortable-container'));
 		
 		$panels = Extension_Dashboard::getPanels();
 		

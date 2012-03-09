@@ -65,7 +65,7 @@
 
 #dashboard {
 	overflow: hidden;
-	margin: 0 -19px;
+	margin: -2px -20px 0 -20px;
 	padding: 10px;
 }
 
@@ -93,9 +93,8 @@
 .panel {
 	background: #FBFBFB;
 	border: 1px solid #ccc;
-	margin: 10px 0;
+	margin: 0 0 20px 0;
 	position: relative;
-	
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
@@ -125,14 +124,11 @@
 }
 
 .panel-placeholder {
-	background: #eee;
-	margin: 10px 0;
-	
-	-moz-border-radius: 7px;
-	-webkit-border-radius: 7px;
+	background: whiteSmoke;
+	margin: 0 0 20px 0;
+	border: 1px dashed rgba(0, 0, 0, 0.2);
 	border-radius: 7px;
-	
-	border: 1px dashed #bbb;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .panel h3 {
@@ -342,10 +338,6 @@ select.hide {
 }
 
 /* PANEL: Symphony Overview */
-
-#dashboard .panel {
-	margin: 0 0 5px 0;
-}
 
 #dashboard .panel dl {
 	margin: 0 0 10px 0;
