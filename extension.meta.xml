@@ -18,7 +18,10 @@
 	</media>
 	<releases>
 		<release version="1.6.0" date="2012-03-09" min="2.3.x">
-			* fully updated for Symphony 2.3, not compatible with Symphony 2.2
+			* Fully updated for Symphony 2.3, not compatible with Symphony 2.2
+		</release>
+		<release version="1.5.2" date="2011-11-01" min="2.2" max="2.2.5">
+			* Generic bug fixes
 		</release>
 		<release version="1.5.1" date="2011-06-01" min="2.2" max="2.2.5">
 			* Removed redundant styles and fixed various CSS bugs
