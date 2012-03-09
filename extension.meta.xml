@@ -17,11 +17,12 @@
 		<item type="image" url="http://symphonyextensions.com/nickdunn/dashboard/media/dashboard.png">Example dashboard</item>
 	</media>
 	<releases>
-		<release version="1.5.1" date="2011-06-01" min="2.2">
-			<![CDATA[
-				* Removed redundant styles and fixed various CSS bugs
-				* Removed deprecated JS & CSS accessors
-			]]>
+		<release version="1.6.0" date="2012-03-09" min="2.3.x">
+			* fully updated for Symphony 2.3, not compatible with Symphony 2.2
+		</release>
+		<release version="1.5.1" date="2011-06-01" min="2.2" max="2.2.5">
+			* Removed redundant styles and fixed various CSS bugs
+			* Removed deprecated JS &amp; CSS accessors
 		</release>
 		<release version="1.4" date="2011-05-15" min="2.1.x" />
 	</releases>
