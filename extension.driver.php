@@ -539,11 +539,10 @@ Class Extension_Dashboard extends Extension{
 			break;
 			
 			case 'markdown_text':
-
-				require_once(TOOLKIT . '/class.textformattermanager.php');
-				$tfm = new TextformatterManager(Administration::instance());
 				
-				$formatter = $tfm->create($config['formatter']);
+				require_once(TOOLKIT . '/class.textformattermanager.php');
+				
+				$formatter = TextformatterManager::create($config['formatter']);
 				$html = $formatter->run($config['text']);
 
 				$context['panel']->appendChild(new XMLElement('div', $html));
