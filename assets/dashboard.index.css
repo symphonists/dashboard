@@ -1,9 +1,4 @@
 /* DASHBOARD */
-#nav {
-	z-index: 1;
-	position: relative;
-}
-
 #context .actions li {
 	margin-left: 10px;
 }
@@ -71,6 +66,8 @@
 	margin-left: 0;
 }
 
+
+
 #dashboard {
 	overflow: hidden;
 	margin: -2px -21px 0 -21px;
@@ -94,24 +91,36 @@
 	background: #fafafa;
 }
 
-#dashboard .sortable-container.active {
-
-}
-
 .panel {
 	background: #FBFBFB;
 	border: 1px solid #ccc;
 	margin: 0 0 20px 0;
 	position: relative;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
+	border-radius: 4px;
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .panel.ui-sortable-helper {
 	-moz-box-shadow: 1px 2px 6px #ddd;
 	-webkit-box-shadow: 1px 2px 6px #ddd;
 	border-color: #ccc;
+}
+
+.panel.ui-sortable-helper h3 {
+	background-color: #668abe;
+	background-image: -webkit-linear-gradient(top, #668abe, #5c83ba);
+	background-image:    -moz-linear-gradient(top, #668abe, #5c83ba);
+	background-image:     -ms-linear-gradient(top, #668abe, #5c83ba);
+	background-image:      -o-linear-gradient(top, #668abe, #5c83ba);
+	background-image:   linear-gradient(to bottom, #668abe, #5c83ba);
+	border-bottom: 1px solid #4D78B4;
+	border-top: 1px solid #4D78B4;
+	color: #fff;
+}
+
+.panel.ui-sortable-helper h3 span,
+.panel.ui-sortable-helper a.panel-edit {
+	visibility: hidden;
 }
 
 .panel-inner {
@@ -147,7 +156,7 @@
 	padding: 4px 10px;
 	color: #555;
 	
-	border-top: 1px solid #fff;
+	border-top: 1px solid rgba(255, 255, 255, 0.6);
 	border-bottom: 1px solid #bfbfbf;
 	
 	-moz-border-radius: 4px;	
@@ -160,7 +169,6 @@
 	
 	background: #ddd;
 	background-image: -moz-linear-gradient(center bottom, #eee, #ddd);
-	
 	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #ddd), color-stop(1, #eee));
 }
 
