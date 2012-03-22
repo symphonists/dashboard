@@ -92,8 +92,8 @@ Class Extension_Dashboard extends Extension{
 		return Symphony::Database()->fetchRow(0, "SELECT * FROM tbl_dashboard_panels WHERE id='{$panel_id}'");
 	}
 	
-	public static function deletePanel($panel) {
-		return Symphony::Database()->query("DELETE FROM tbl_dashboard_panels WHERE id='{$panel['id']}'");
+	public static function deletePanel($panel_id) {
+		return Symphony::Database()->query("DELETE FROM tbl_dashboard_panels WHERE id='{$panel_id}'");
 	}
 	
 	public static function updatePanelOrder($id, $placement, $sort_order) {
