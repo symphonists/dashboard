@@ -3,7 +3,6 @@
 require_once(TOOLKIT . '/class.datasourcemanager.php');
 require_once(TOOLKIT . '/class.entrymanager.php');
 require_once(TOOLKIT . '/class.eventmanager.php');
-require_once(TOOLKIT . '/class.sectionmanager.php');
 require_once(TOOLKIT . '/class.pagemanager.php');
 
 Class Extension_Dashboard extends Extension{
@@ -328,7 +327,6 @@ Class Extension_Dashboard extends Extension{
 				$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
 				$fieldset->appendChild(new XMLElement('legend', __('Markdown Text Block')));
 				
-				require_once(TOOLKIT . '/class.textformattermanager.php');
 				$formatters = array();
 				foreach(TextformatterManager::listAll() as $tf) {
 					$formatters[] = array(
@@ -541,8 +539,6 @@ Class Extension_Dashboard extends Extension{
 			break;
 			
 			case 'markdown_text':
-				
-				require_once(TOOLKIT . '/class.textformattermanager.php');
 				
 				$formatter = TextformatterManager::create($config['formatter']);
 				$html = $formatter->run($config['text']);
