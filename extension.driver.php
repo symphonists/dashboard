@@ -1,5 +1,11 @@
 <?php
 
+require_once(TOOLKIT . '/class.datasourcemanager.php');
+require_once(TOOLKIT . '/class.entrymanager.php');
+require_once(TOOLKIT . '/class.eventmanager.php');
+require_once(TOOLKIT . '/class.sectionmanager.php');
+require_once(TOOLKIT . '/class.pagemanager.php');
+
 Class Extension_Dashboard extends Extension{
 
 	public function install() {
@@ -244,10 +250,14 @@ Class Extension_Dashboard extends Extension{
 			
 			case 'datasource_to_table':
 				
-				require_once(TOOLKIT . '/class.datasourcemanager.php');
-				$dsm = new DatasourceManager(Administration::instance());
 				$datasources = array();
-				foreach($dsm->listAll() as $ds) $datasources[] = array($ds['handle'], ($config['datasource'] == $ds['handle']), $ds['name']);
+				foreach(DatasourceManager::listAll() as $ds) {
+					$datasources[] = array(
+						$ds['handle'],
+						($config['datasource'] == $ds['handle']),
+						$ds['name']
+					);
+				}
 
 				$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
 				$fieldset->appendChild(new XMLElement('legend', __('Data Source to Table')));
@@ -319,9 +329,14 @@ Class Extension_Dashboard extends Extension{
 				$fieldset->appendChild(new XMLElement('legend', __('Markdown Text Block')));
 				
 				require_once(TOOLKIT . '/class.textformattermanager.php');
-				$tfm = new TextformatterManager(Administration::instance());
 				$formatters = array();
-				foreach($tfm->listAll() as $tf) $formatters[] = array($tf['handle'], ($config['formatter'] == $tf['handle']), $tf['name']);
+				foreach(TextformatterManager::listAll() as $tf) {
+					$formatters[] = array(
+						$tf['handle'],
+						($config['formatter'] == $tf['handle']),
+						$tf['name']
+					);
+				}
 
 				$fieldset = new XMLElement('fieldset', NULL, array('class' => 'settings'));
 				$fieldset->appendChild(new XMLElement('legend', __('Markdown Text')));
@@ -346,8 +361,6 @@ Class Extension_Dashboard extends Extension{
 		switch($context['type']) {
 			
 			case 'datasource_to_table':
-				
-				require_once(TOOLKIT . '/class.datasourcemanager.php');
 
 				$ds = DatasourceManager::create($config['datasource'], NULL, false);
 				if (!$ds) {
@@ -503,33 +516,22 @@ Class Extension_Dashboard extends Extension{
 				$container->appendChild(new XMLElement('h4', __('Configuration')));
 				$container->appendChild($dl);
 				
-				require_once(TOOLKIT . '/class.datasourcemanager.php');
-				$dsm = new DatasourceManager(Administration::instance());
-				
-				require_once(TOOLKIT . '/class.eventmanager.php');
-				$em = new EventManager(Administration::instance());
-				
-				require_once(TOOLKIT . '/class.sectionmanager.php');
-				$sm = new SectionManager(Administration::instance());
-				$sections = $sm->fetch();
-				
-				$sections_count = 0;
-				if ($sections) $sections_count = count($sections);
-				
-				$entries = Administration::instance()->Database()->fetchRow(0, "SELECT count(id) AS `count` FROM tbl_entries");
-				$pages = Administration::instance()->Database()->fetchRow(0, "SELECT count(id) AS `count` FROM tbl_pages");
+				$entries = 0;
+				foreach(SectionManager::fetch() as $section) {
+					$entries += EntryManager::fetchCount($section->get('id'));
+				}
 				
 				$dl = new XMLElement('dl');
 				$dl->appendChild(new XMLElement('dt', __('Sections')));
-				$dl->appendChild(new XMLElement('dd', (string)$sections_count));
+				$dl->appendChild(new XMLElement('dd', (string)count(SectionManager::fetch())));
 				$dl->appendChild(new XMLElement('dt', __('Entries')));
-				$dl->appendChild(new XMLElement('dd', (string)$entries['count']));
+				$dl->appendChild(new XMLElement('dd', (string)$entries));
 				$dl->appendChild(new XMLElement('dt', __('Data Sources')));
-				$dl->appendChild(new XMLElement('dd', (string)count($dsm->listAll())));
+				$dl->appendChild(new XMLElement('dd', (string)count(DatasourceManager::listAll())));
 				$dl->appendChild(new XMLElement('dt', __('Events')));
-				$dl->appendChild(new XMLElement('dd', (string)count($em->listAll())));
+				$dl->appendChild(new XMLElement('dd', (string)count(EventManager::listAll())));
 				$dl->appendChild(new XMLElement('dt', __('Pages')));
-				$dl->appendChild(new XMLElement('dd', (string)$pages['count']));
+				$dl->appendChild(new XMLElement('dd', (string)count(PageManager::fetch())));
 				
 				$container->appendChild(new XMLElement('h4', __('Statistics')));
 				$container->appendChild($dl);
