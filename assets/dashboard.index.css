@@ -120,7 +120,8 @@
 
 .panel.ui-sortable-helper h3 span,
 .panel.ui-sortable-helper a.panel-edit {
-	visibility: hidden;
+	opacity: 0.3;
+	color: #fff;
 }
 
 .panel-inner {
