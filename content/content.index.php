@@ -58,9 +58,10 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 			);
 		}
 
-		$this->appendSubheading($welcome . ', ' . Administration::instance()->Author->get('first_name'), $actions);
-		
 		$this->Form->setAttribute('class', 'two columns');
+		
+		$this->appendSubheading($welcome . ', ' . Administration::instance()->Author->get('first_name'), $actions);
+		$this->insertDrawer(Widget::Drawer('Dashboard', new XMLElement('span', '')), 'horizontal', FALSE);
 		
 		$container = new XMLElement('div', NULL, array('id' => 'dashboard'));
 		

@@ -12,17 +12,18 @@ Dashboard
 -----------------------------------------------------------------------------*/
 var Dashboard = {
 	
-	$dashboard: null,
+	dashboard: null,
 	edit_mode: false,
 	
 	init: function() {
 		
 		var self = this;
 
-		this.$dashboard = jQuery('#dashboard');
+		this.dashboard = jQuery('#dashboard');
+		this.drawer = jQuery('#drawer-dashboard');
 		
 		// Edit Mode button
-		jQuery('a.edit-mode').bind('click', function(e) {
+		jQuery('#context').on('click', 'a.edit-mode', function(e) {
 			e.preventDefault();		
 			self.edit_mode = !self.edit_mode;
 			
@@ -32,53 +33,54 @@ var Dashboard = {
 			jQuery(this).text(title).attr('title', text);
 			
 			if (self.edit_mode === true) {
-				self.$dashboard.addClass('edit');
+				self.dashboard.addClass('edit');
 				jQuery('.primary, .secondary').sortable('enable');
 			} else {
-				self.$dashboard.removeClass('edit');
+				self.dashboard.removeClass('edit');
 				jQuery('.primary, .secondary').sortable('disable');
 			}
 			
 		});
 		
 		// Create New button
-		jQuery('select[name="panel-type"]').live('change', function(e) {
+		jQuery('#context').on('change', 'select[name="panel-type"]', function(e) {
 			e.preventDefault();
 			var type = jQuery(this).val();
 			if(type === '') return;
 			self.showEditForm(type);
 		});
-		
-		// Edit panel button
-		jQuery('.panel a.panel-edit').live('click', function(e) {
-			e.preventDefault();		
-			var id = jQuery(this).parent().attr('id').replace(/id-/,'');
-			var panel_type = jQuery(this).parent().attr('class').replace(/panel /,'');
-			self.showEditForm(panel_type, id);
-		});
 
 		// Delete panel button
-		jQuery('#save-panel button[name="action[delete]"]').live('click', function(e) {
+		jQuery('#context').on('click', '#drawer-dashboard button[name="action[delete]"]', function(e) {
 			e.preventDefault();
 			self.savePanel(jQuery('#context form').serialize(), 'delete');
 		});
 		
 		// Cancel form button
-		jQuery('#save-panel input[name="action[cancel]"]').live('click', function(e) {
+		jQuery('#context').on('click', '#drawer-dashboard input[name="action[cancel]"]', function(e) {
 			e.preventDefault();
+			self.resetPanelType();
 			self.hideEditForm(null, true);
 		});
 		
 		// Save panel button
-		jQuery('#save-panel input[name="action[submit]"]').live('click', function(e) {
+		jQuery('#context').on('click', '#drawer-dashboard input[name="action[submit]"]', function(e) {
 			e.preventDefault();
 			self.savePanel(jQuery('#context form').serialize(), 'submit');
 		});
 		
 		// Save panel button (form submit default)
-		jQuery('form').bind('submit', function(e) {
+		jQuery('#context').on('submit', '#drawer-dashboard form', function(e) {
 			e.preventDefault();
-			self.savePanel(jQuery('#context form').serialize(), 'submit');
+			self.savePanel(jQuery('#context #drawer-dashboard form').serialize(), 'submit');
+		});
+		
+		// Edit panel button
+		jQuery('#dashboard').on('click', '.panel a.panel-edit', function(e) {
+			e.preventDefault();		
+			var id = jQuery(this).parent().attr('id').replace(/id-/,'');
+			var panel_type = jQuery(this).parent().attr('class').replace(/panel /,'');
+			self.showEditForm(panel_type, id);
 		});
 		
 		jQuery('.primary, .secondary').sortable({
@@ -102,9 +104,9 @@ var Dashboard = {
 		});
 		
 		// Panel name
-		jQuery('#save-panel input[name="panel[label]"]').live('keyup change', function(e) {
+		jQuery('#context').on('keyup change', '#drawer-dashboard input[name="label"]', function(e) {
 			var name = jQuery(e.target).val();
-			var title = jQuery('#save-panel h3 span');
+			var title = jQuery('#drawer-dashboard h3 span');
 			if(name) {
 				title.text(name);
 			}
@@ -138,12 +140,21 @@ var Dashboard = {
 		
 	},
 	
+	resetPanelType: function() {
+		jQuery('#context select[name="panel-type"]').val('');
+	},
+	
 	hideEditForm: function(callback, enable_dashboard) {
-		if (enable_dashboard === true) this.$dashboard.fadeTo('fast', 1);
-		jQuery('#save-panel').slideUp(function() {
-			jQuery(this).remove();
-			if (typeof callback == 'function') callback();
-		});
+		var self = this;
+		if (enable_dashboard === true) this.dashboard.fadeTo('fast', 1);
+		this.drawer
+			.unbind('collapsestop.drawer')
+			.bind('collapsestop.drawer', function() {
+				if (typeof callback == 'function') {
+					callback();
+				}
+			});
+		this.drawer.trigger('collapse.drawer');
 	},
 	
 	showEditForm: function(panel_type, id) {
@@ -164,24 +175,22 @@ var Dashboard = {
 				}
 				
 				// Update title
-				jQuery('#save-panel input[name="panel[label]"]').change();
+				//jQuery('#save-panel input[name="panel[label]"]').change();
 			}
 		});
 	},
 	
 	revealEditForm: function(html) {
 		// fade down dashboard panels to give edit form more priority
-		this.$dashboard.fadeTo('fast', 0.25);
-		// append form to page (hidden with CSS)
-		jQuery('#context').append(html);
-		jQuery('#save-panel').slideDown();
+		this.dashboard.fadeTo('fast', 0.25);
+		this.drawer.find('.contents').empty().html(html);
+		this.drawer.trigger('expand.drawer');
 	},
 	
 	savePanel: function(post_data, action) {
 		var self = this;
 		
 		post_data += '&action[' + action + ']=true';
-		console.log(post_data)
 		
 		jQuery.ajax({
 			type: 'POST',
@@ -218,9 +227,9 @@ var Dashboard = {
 					break;
 					
 					case 'submit':
+						self.resetPanelType();
 						// insert new panel
 						if (panel.length == 0) {
-							console.log(placement)
 							self.hideEditForm(function() {
 								jQuery('.' + placement).append(html);
 								jQuery('.new-panel').slideDown('fast', function() {
