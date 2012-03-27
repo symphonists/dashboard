@@ -87,10 +87,6 @@
 	border-radius: 7px;
 }
 
-#dashboard .sortable-container.hover {
-	background: #fafafa;
-}
-
 .panel {
 	background: #FBFBFB;
 	border: 1px solid #ccc;
