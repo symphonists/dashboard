@@ -31,6 +31,7 @@ var Dashboard = {
 			var title = jQuery(this).attr('title');
 			
 			jQuery(this).text(title).attr('title', text);
+			jQuery(this).toggleClass('selected');
 			
 			if (self.edit_mode === true) {
 				self.dashboard.addClass('edit');
