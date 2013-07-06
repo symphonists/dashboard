@@ -2,12 +2,15 @@
 <extension id="dashboard" status="released" xmlns="http://symphony-cms.com/schemas/extension/1.0">
 	<name>Dashboard</name>
 	<description>Provide a Dashboard summary screen with configurable panels</description>
-	<repo type="github">https://github.com/nickdunn/dashboard</repo>
+	<repo type="github">https://github.com/symphonists/dashboard</repo>
 	<url type="discuss">http://symphony-cms.com/discuss/thread/48297/</url>
 	<types>
 		<type>Interface</type>
 	</types>
 	<authors>
+		<author>
+          		<name github="symphonists" symphony="community">Symphony Community</name>
+    		</author>
 		<author>
 			<name github="nickdunn" symphony="nickdunn">Nick Dunn</name>
 			<website>http://nick-dunn.co.uk</website>
