@@ -477,7 +477,7 @@ Class Extension_Dashboard extends Extension{
 				require_once(TOOLKIT . '/class.gateway.php');
 				$ch = new Gateway;
 				$ch->init();
-				$ch->setopt('URL', 'https://github.com/api/v2/json/repos/show/symphonycms/symphony-2/tags');
+				$ch->setopt('URL', 'https://api.github.com/repos/symphonycms/symphony-2/tags');
 				$ch->setopt('TIMEOUT', $timeout);
 				$repo_tags = $ch->exec();
 				
@@ -486,10 +486,10 @@ Class Extension_Dashboard extends Extension{
 					$repo_tags = json_decode($repo_tags);
 					$tags = array();
 
-					foreach($repo_tags->tags as $tag => $ref) {
+					foreach($repo_tags as $tag) {
 						// remove tags that contain strings
-						if(preg_match('/[a-zA]/i', $tag)) continue;
-						$tags[] = $tag;
+						if(preg_match('/[a-zA]/i', $tag->name)) continue;
+						$tags[] = $tag->name;
 					}
 
 					natsort($tags);
