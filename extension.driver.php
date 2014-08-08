@@ -508,7 +508,7 @@ Class Extension_Dashboard extends Extension{
 				$dl->appendChild(new XMLElement('dt', __('Version')));
 				$dl->appendChild(new XMLElement(
 					'dd',
-					$current_version . (($needs_update) ? ' (<a href="http://symphony-cms.com/download/releases/version/'.$latest_version.'/">' . __('Latest is %s', array($latest_version)) . "</a>)" : '')
+					$current_version . (($needs_update) ? ' (<a href="http://getsymphony.com/download/releases/version/'.$latest_version.'/">' . __('Latest is %s', array($latest_version)) . "</a>)" : '')
 				));
 				
 				$container->appendChild(new XMLElement('h4', __('Configuration')));
