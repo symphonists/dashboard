@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<extension id="dashboard" status="released" xmlns="http://symphony-cms.com/schemas/extension/1.0">
+<extension id="dashboard" status="released" xmlns="http://getsymphony.com/schemas/extension/1.0">
 	<name>Dashboard</name>
 	<description>Provide a Dashboard summary screen with configurable panels</description>
 	<repo type="github">https://github.com/symphonists/dashboard</repo>
-	<url type="discuss">http://symphony-cms.com/discuss/thread/48297/</url>
+	<url type="discuss">http://getsymphony.com/discuss/thread/48297/</url>
 	<types>
 		<type>Interface</type>
 	</types>
 	<authors>
 		<author>
-          		<name github="symphonists" symphony="community">Symphony Community</name>
-    		</author>
+			<name github="symphonists" symphony="community">Symphony Community</name>
+		</author>
 		<author>
 			<name github="nickdunn" symphony="nickdunn">Nick Dunn</name>
 			<website>http://nick-dunn.co.uk</website>
@@ -20,6 +20,11 @@
 		<item type="image" url="http://symphonyextensions.com/nickdunn/dashboard/media/dashboard.png">Example dashboard</item>
 	</media>
 	<releases>
+		<release version="1.7.0" date="2014-08-08" min="2.3.x">
+			* Updated to new Github API
+			* Add Russian Language
+			* Various fixes for the drawer and implementation
+		</release>
 		<release version="1.6.0" date="2012-03-09" min="2.3.x">
 			* Fully updated for Symphony 2.3, not compatible with Symphony 2.2
 		</release>
