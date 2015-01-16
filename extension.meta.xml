@@ -20,6 +20,9 @@
 		<item type="image" url="http://symphonyextensions.com/nickdunn/dashboard/media/dashboard.png">Example dashboard</item>
 	</media>
 	<releases>
+		<release version="1.8.0" date="2015-01-16" min="2.3.x">
+			- Symphony 2.5 compatibility
+		</release>
 		<release version="1.7.0" date="2014-08-08" min="2.3.x">
 			* Updated to new Github API
 			* Add Russian Language
