@@ -14,10 +14,18 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 		$this->addStylesheetToHead(URL . '/extensions/dashboard/assets/dashboard.index.css', 'screen', 29422);
 		$this->addScriptToHead(URL . '/extensions/dashboard/assets/dashboard.index.js', 29423);
 		
+		// https://github.com/symphonycms/symphony-2/wiki/Migration-Guide-to-2.5-for-Developers#properties
+		$author = null;
+		if (is_callable(array('Symphony', 'Author'))) {
+			$author = Symphony::Author();
+		} else {
+			$author = Administration::instance()->Author;
+		}
+
 		// Add welcome message
 		$hour = date('H');
 		$welcome = __('Nice to meet you');
-		if(Administration::instance()->Author->get('last_seen') != NULL) {
+		if($author->get('last_see') != NULL) {
 			if($hour < 10) $welcome = __('Good morning');
 			elseif($hour < 17) $welcome = __('Welcome back');
 			else $welcome = __('Good evening');
@@ -48,8 +56,8 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 		
 		$actions = array();
 		$actions[] = Widget::Select('panel-type', $panel_types_options);
-		
-		if(Administration::instance()->Author->isDeveloper()) {
+
+		if($author->isDeveloper()) {
 			$actions[] = Widget::Anchor(
 				__('Enable Editing'),
 				'#',
@@ -60,7 +68,7 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 
 		$this->Form->setAttribute('class', 'two columns');
 		
-		$this->appendSubheading($welcome . ', ' . Administration::instance()->Author->get('first_name'), $actions);
+		$this->appendSubheading($welcome . ', ' . $author->get('first_name'), $actions);
 		$this->insertDrawer(Widget::Drawer('dashboard', 'Dashboard', new XMLElement('span', ''), 'closed', time()), 'horizontal', FALSE);
 		
 		$container = new XMLElement('div', NULL, array('id' => 'dashboard'));
