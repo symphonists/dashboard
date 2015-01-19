@@ -482,7 +482,7 @@ Class Extension_Dashboard extends Extension{
 				$repo_tags = $ch->exec();
 				
 				// tags request found
-				if($repo_tags) {
+				if(is_array($repo_tags)) {
 					$repo_tags = json_decode($repo_tags);
 					$tags = array();
 
