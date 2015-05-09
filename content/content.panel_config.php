@@ -161,6 +161,8 @@ class contentExtensionDashboardPanel_Config extends AjaxPage {
 
 			$container->appendChild($primary);
 
+			if (Symphony::isXSRFEnabled()) $container->prependChild(XSRF::formToken());
+
 			$this->_Result = $container;
 		}
 	}
