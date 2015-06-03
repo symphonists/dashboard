@@ -27,11 +27,10 @@ There are five core panel types:
 
 The delegates that Dashboard provides means that other extensions can supply their own dashboard panels. These include:
 
-* [Tracker](#) panel shows summary of all author and developer activity within Symphony
-* [Search Index](#) panel shows a list of recent searches
-* [Sections Panel](#) shows latest entries from a section (without creating a data source)
-* [Health Check](#) ...
-* [Google Analytics](#) ...
+* [Tracker](http://symphonyextensions.com/extensions/tracker/) panel shows summary of all author and developer activity within Symphony
+* [Search Index](http://symphonyextensions.com/extensions/search_index/) panel shows a list of recent searches
+* [Sections Panel](http://symphonyextensions.com/extensions/sections_panel/) shows latest entries from a section (without creating a data source)
+* [Health Check](http://symphonyextensions.com/extensions/health_check/) shows test results against your server to determine the best permissions for your environment.
 
 ## Creating your own panel types
 
