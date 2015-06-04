@@ -67,13 +67,6 @@
 }
 
 
-
-#dashboard {
-	overflow: hidden;
-	margin: -2px -21px 0 -21px;
-	padding: 10px;
-}
-
 #dashboard .sortable-container {
 	padding-top: 0;
 }
