@@ -89,7 +89,7 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 		}
 		
 		$container->appendChild($primary);
-		$container->appendChild($secondary);		
+		$container->appendChild($secondary);
 		$this->Form->appendChild($container);
 		
 	}
