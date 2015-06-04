@@ -45,19 +45,18 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 			'types' => &$panel_types
 		));
 		
-		$panel_types_options = array(
-			array('', FALSE, __('New Panel'))
-		);
-		
-		natsort($panel_types);
-		foreach($panel_types as $handle => $name) {
-			$panel_types_options[] = array($handle, false, $name);
-		}
-		
-		$actions = array();
-		$actions[] = Widget::Select('panel-type', $panel_types_options);
-
 		if($author->isDeveloper()) {
+			$panel_types_options = array(
+				array('', FALSE, __('New Panel'))
+			);
+			
+			natsort($panel_types);
+			foreach($panel_types as $handle => $name) {
+				$panel_types_options[] = array($handle, false, $name);
+			}
+			
+			$actions = array();
+			$actions[] = Widget::Select('panel-type', $panel_types_options);
 			$actions[] = Widget::Anchor(
 				__('Enable Editing'),
 				'#',
