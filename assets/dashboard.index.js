@@ -15,6 +15,12 @@ var Dashboard = {
 	dashboard: null,
 	edit_mode: false,
 	
+	xsrfToken: function () {
+		return !Symphony.Utilities.getXSRF ?
+			'' :
+			'&xsrf=' + Symphony.Utilities.getXSRF();
+	},
+	
 	init: function() {
 		
 		var self = this;
@@ -24,7 +30,7 @@ var Dashboard = {
 		
 		// Edit Mode button
 		jQuery('#context').on('click', 'a.edit-mode', function(e) {
-			e.preventDefault();		
+			e.preventDefault();
 			self.edit_mode = !self.edit_mode;
 			
 			var text = jQuery(this).text();
@@ -133,6 +139,8 @@ var Dashboard = {
 			});
 		});
 		
+		post_data += '&' + Dashboard.xsrfToken();
+		
 		jQuery.ajax({
 			type: 'POST',
 			url: Symphony.Context.get('root') + '/symphony/extension/dashboard/save_order/',
@@ -191,7 +199,7 @@ var Dashboard = {
 	savePanel: function(post_data, action) {
 		var self = this;
 		
-		post_data += '&action[' + action + ']=true';
+		post_data += '&action[' + action + ']=true&' + Dashboard.xsrfToken();
 		
 		jQuery.ajax({
 			type: 'POST',
