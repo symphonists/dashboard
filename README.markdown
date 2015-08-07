@@ -31,6 +31,7 @@ The delegates that Dashboard provides means that other extensions can supply the
 * [Search Index](http://symphonyextensions.com/extensions/search_index/) panel shows a list of recent searches
 * [Sections Panel](http://symphonyextensions.com/extensions/sections_panel/) shows latest entries from a section (without creating a data source)
 * [Health Check](http://symphonyextensions.com/extensions/health_check/) shows test results against your server to determine the best permissions for your environment.
+* [Google Analytics](http://symphonyextensions.com/extensions/google_analytics_dashboard/) allows you to create panels that displays Google Analytics Charts.
 
 ## Creating your own panel types
 
