@@ -10,7 +10,7 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 		$this->setPageType('form');
 		$this->setTitle(__('Symphony') . ' &ndash; ' . __('Dashboard'));
 		
-		$this->addScriptToHead(URL . '/extensions/dashboard/assets/jquery-ui-1.8.2.custom.min.js', 29421);
+		$this->addScriptToHead(URL . '/extensions/dashboard/assets/jquery-ui-1.11.4.custom.min.js', 29421);
 		$this->addStylesheetToHead(URL . '/extensions/dashboard/assets/dashboard.index.css', 'screen', 29422);
 		$this->addScriptToHead(URL . '/extensions/dashboard/assets/dashboard.index.js', 29423);
 		
@@ -45,19 +45,18 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 			'types' => &$panel_types
 		));
 		
-		$panel_types_options = array(
-			array('', FALSE, __('New Panel'))
-		);
-		
-		natsort($panel_types);
-		foreach($panel_types as $handle => $name) {
-			$panel_types_options[] = array($handle, false, $name);
-		}
-		
-		$actions = array();
-		$actions[] = Widget::Select('panel-type', $panel_types_options);
-
 		if($author->isDeveloper()) {
+			$panel_types_options = array(
+				array('', FALSE, __('New Panel'))
+			);
+			
+			natsort($panel_types);
+			foreach($panel_types as $handle => $name) {
+				$panel_types_options[] = array($handle, false, $name);
+			}
+			
+			$actions = array();
+			$actions[] = Widget::Select('panel-type', $panel_types_options);
 			$actions[] = Widget::Anchor(
 				__('Enable Editing'),
 				'#',
@@ -90,7 +89,7 @@ Class contentExtensionDashboardIndex extends AdministrationPage {
 		}
 		
 		$container->appendChild($primary);
-		$container->appendChild($secondary);		
+		$container->appendChild($secondary);
 		$this->Form->appendChild($container);
 		
 	}

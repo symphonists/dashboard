@@ -106,7 +106,7 @@ class contentExtensionDashboardPanel_Config extends AjaxPage {
 			$container->setAttribute('id', 'save-panel');
 			$container->appendChild(new XMLElement('div', NULL, array('class' => 'top')));
 
-			$heading = new XMLElement('h3', __('Configuration') . ' <span>' . __('Untitled Panel') . '<span>');
+			$heading = new XMLElement('h3', __('Configuration') . ' <span>' . (isset($this->panelLabel) ? $this->panelLabel :__('Untitled Panel')) . '<span>');
 			$container->appendChild($heading);
 
 			$config_options = Extension_Dashboard::buildPanelOptions(
