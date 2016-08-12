@@ -124,7 +124,7 @@ Class Extension_Dashboard extends Extension{
 				VALUES('%s','%s','%s','%s','%d')",
 				Symphony::Database()->cleanValue($panel['label']),
 				Symphony::Database()->cleanValue($panel['type']),
-				serialize($config),
+				Symphony::Database()->cleanValue(serialize($config)),
 				Symphony::Database()->cleanValue($panel['placement']),
 				$max_sort_order + 1
 			));
@@ -140,7 +140,7 @@ Class Extension_Dashboard extends Extension{
 				placement = '%s'
 				WHERE id = '%d'",
 				Symphony::Database()->cleanValue($panel['label']),
-				serialize($config),
+				Symphony::Database()->cleanValue(serialize($config)),
 				Symphony::Database()->cleanValue($panel['placement']),
 				(int)$panel['id']
 			));
