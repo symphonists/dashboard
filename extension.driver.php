@@ -488,21 +488,24 @@ Class Extension_Dashboard extends Extension{
 				$repo_tags = $ch->exec();
 				
 				// tags request found
-				if(is_array($repo_tags)) {
-					$repo_tags = json_decode($repo_tags);
+				if(!empty($repo_tags)) {
+					$repo_tags = @json_decode($repo_tags);
 					$tags = array();
+					if (!$repo_tags || !is_array($repo_tags)) {
+						$latest_version = $current_version;
+					} else {
 
-					foreach($repo_tags as $tag) {
-						// remove tags that contain strings
-						if(preg_match('/[a-zA]/i', $tag->name)) continue;
-						$tags[] = $tag->name;
+						foreach($repo_tags as $tag) {
+							// remove tags that contain strings
+							if(preg_match('/[a-zA]/i', $tag->name)) continue;
+							$tags[] = $tag->name;
+						}
+
+						natsort($tags);
+						rsort($tags);
+						
+						$latest_version = reset($tags);
 					}
-
-					natsort($tags);
-					rsort($tags);
-					
-					$latest_version = reset($tags);
-					
 				}
 				// request for tags failed, assume current version is latest
 				else {
