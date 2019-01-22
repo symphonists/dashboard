@@ -503,7 +503,7 @@ Class Extension_Dashboard extends Extension{
 
 						natsort($tags);
 						rsort($tags);
-						
+
 						$latest_version = reset($tags);
 					}
 				}
@@ -519,7 +519,21 @@ Class Extension_Dashboard extends Extension{
 					'dd',
 					$current_version . (($needs_update) ? ' (<a href="http://getsymphony.com/download/releases/version/'.$latest_version.'/">' . __('Latest is %s', array($latest_version)) . "</a>)" : '')
 				));
-				
+
+				// Display PHP version
+				$ver = (float)phpversion();
+				$version = phpversion();
+				if ($ver > 7.0) {
+					$dl->appendChild(new XMLElement('dt', __('PHP Version')));
+					$dl->appendChild(new XMLElement('dd', '<span style="color:green">' . $version . '</span>'));
+				} elseif ($ver === 7.0) {
+					$dl->appendChild(new XMLElement('dt', __('PHP Version')));
+					$dl->appendChild(new XMLElement('dd', '<span style="color:orange">' . $version . '<br />Please go to your server management and check if a newer PHP version is available.</span>'));
+				} else {
+					$dl->appendChild(new XMLElement('dt', __('PHP Version')));
+					$dl->appendChild(new XMLElement('dd', '<span style="color:red">' . $version . '<br />Your PHP version is outdated. For security reasons, please go to your server management and set the current PHP version (> 7.0) for this host.</        span>'));
+				}
+
 				$container->appendChild(new XMLElement('h4', __('Configuration')));
 				$container->appendChild($dl);
 				
