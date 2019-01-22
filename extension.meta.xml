@@ -20,6 +20,9 @@
 		<item type="image" url="http://symphonyextensions.com/nickdunn/dashboard/media/dashboard.png">Example dashboard</item>
 	</media>
 	<releases>
+		<release version="2.1.0" date="2019-01-22" min="2.5.0" max="2.x.x">
+			* Add PHP version to the Symphony Overview #22
+		</release>
 		<release version="2.0.2" date="2018-06-01" min="2.5.0" max="2.x.x">
 			* Fix latest version broken parsing
 		</release>
